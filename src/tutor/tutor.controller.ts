@@ -2,10 +2,14 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { Crud } from '../interfaces/crud';
 import { TutorService } from './tutor.service';
 import { Tutor } from '../entity/tutor.entity';
+import { InsertResult } from 'typeorm';
+import { ChildService } from '../child/child.service';
 
 @Controller('tutor')
 export class TutorController implements Crud {
-  constructor(private readonly tutorService: TutorService) {}
+  constructor(private readonly tutorService: TutorService,
+              private readonly childService: ChildService) {
+  }
 
   @Get()
   all(): Promise<Tutor[]> {
@@ -24,8 +28,15 @@ export class TutorController implements Crud {
       password: tutor.password,
       createdAt: new Date(),
       updatedAt: new Date(),
+      children: tutor.children,
     };
-    return this.tutorService.create(t);
+    const tutorCreate = this.tutorService.create(t);
+    return tutorCreate.then(result => {
+      tutor.children.map(c => {
+        c.tutorId = result.identifiers[0].id;
+      });
+      return this.childService.create(tutor.children);
+    });
   }
 
   @Get(':id')
@@ -34,7 +45,7 @@ export class TutorController implements Crud {
   }
 
   @Put(':id')
-  update(@Param() params, @Body() tutor: Tutor) {
+  update(@Param() params, @Body() tutor) {
     const w = {
       name: tutor.name,
       lastName: tutor.lastName,
@@ -47,9 +58,9 @@ export class TutorController implements Crud {
     return this.tutorService.update(params.id, w);
   }
 
-  @Delete()
-  delete(id: any) {
-    return this.tutorService.delete(id);
+  @Delete(':id')
+  delete(@Param() params) {
+    return this.tutorService.delete(params.id);
   }
 
   @Get('search/:name')

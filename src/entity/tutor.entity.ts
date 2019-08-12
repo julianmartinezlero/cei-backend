@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Child } from './child.entity';
 
 @Entity()
 export class Tutor {
@@ -28,4 +29,8 @@ export class Tutor {
 
   @UpdateDateColumn({type: 'timestamp'})
   updatedAt: Date;
+
+  @OneToMany(type => Child, child => child.tutor, { cascade: true, eager: true })
+  @JoinColumn()
+  children: Child[];
 }

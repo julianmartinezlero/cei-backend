@@ -11,7 +11,9 @@ export class TutorService implements Crud {
     private readonly tutorRepository: Repository<Tutor>,
   ) {}
   async all(): Promise<Tutor[]> {
-    return await this.tutorRepository.createQueryBuilder().getMany();
+    return this.tutorRepository.createQueryBuilder('tutor')
+      .leftJoinAndSelect('tutor.children', 'children')
+      .getMany();
   }
   async create(tutor: Tutor): Promise<any> {
     return await this.tutorRepository.insert(tutor);
