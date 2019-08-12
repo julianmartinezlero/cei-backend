@@ -15,7 +15,7 @@ export class Child {
   @Column({ type: 'date' })
   birthDate: string;
 
-  @Column({ type: 'char', length: 1 })
+  @Column({ type: 'varchar', length: 9 })
   sex: string;
 
   @Column({ length: 10, nullable: true })

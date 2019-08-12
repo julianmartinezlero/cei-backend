@@ -41,8 +41,8 @@ export class ChildController implements Crud {
       name: child.name,
       lastName: child.lastName,
       ci: child.ci,
-      birthDate: child.birthDate,
-      sex: child.sex,
+      // birthDate: child.birthDate,
+      // sex: child.sex,
       updatedAt: new Date(),
     };
     return this.childService.update(params.id, w);

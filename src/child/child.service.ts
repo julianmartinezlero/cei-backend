@@ -8,32 +8,35 @@ import { Child } from '../entity/child.entity';
 export class ChildService implements Crud {
   constructor(
     @InjectRepository(Child)
-    private readonly tutorRepository: Repository<Child>,
+    private readonly childRepository: Repository<Child>,
   ) {
   }
 
   async all(): Promise<Child[]> {
-    return await this.tutorRepository.createQueryBuilder().getMany();
+    // return await this.tutorRepository.createQueryBuilder().getMany();
+    return this.childRepository.createQueryBuilder('child')
+      .leftJoinAndSelect('child.tutor', 'tutor')
+      .getMany();
   }
 
   async create(child: Child | Child[]): Promise<any> {
-    return await this.tutorRepository.insert(child);
+    return await this.childRepository.insert(child);
   }
 
   async update(id: number, child: any) {
-    return await this.tutorRepository.update(id, child);
+    return await this.childRepository.update(id, child);
   }
 
   async delete(id: number): Promise<any> {
-    return await this.tutorRepository.delete(id);
+    return await this.childRepository.delete(id);
   }
 
   async show(id: number): Promise<any> {
-    return await this.tutorRepository.findOne(id);
+    return await this.childRepository.findOne(id);
   }
 
   async search(name: string): Promise<any> {
-    return await this.tutorRepository.createQueryBuilder('user')
+    return await this.childRepository.createQueryBuilder('user')
       .where('user.name like :name', { name: '%' + name + '%' })
       .getMany();
   }
