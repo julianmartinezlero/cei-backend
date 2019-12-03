@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Tutor } from './tutor.entity';
+import { Test } from './test.entity';
 
 @Entity()
 export class Child {
@@ -21,15 +22,21 @@ export class Child {
   @Column({ length: 10, nullable: true })
   ci: string;
 
-  @CreateDateColumn({ type: 'timestamp' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ type: 'timestamp' })
-  updatedAt: Date;
+  @Column({ nullable: true, type: 'longtext' })
+  photo: any;
 
   @ManyToOne(type => Tutor, tutor => tutor.children, { nullable: false, onDelete: 'CASCADE' })
   tutor: Tutor;
 
   @Column()
   tutorId: number;
+
+  @OneToMany(type => Test, test => test.child)
+  tests: Test[];
+
+  @CreateDateColumn({ type: 'timestamp' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ type: 'timestamp' })
+  updatedAt: Date;
 }

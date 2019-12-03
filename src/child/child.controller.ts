@@ -26,6 +26,8 @@ export class ChildController implements Crud {
       updatedAt: new Date(),
       tutor: null,
       tutorId: child.tutorId,
+      photo: null,
+      tests: null,
     };
     return this.childService.create(t);
   }

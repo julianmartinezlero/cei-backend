@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Test } from './test.entity';
 
 @Entity()
 export class Professional {
@@ -28,6 +29,9 @@ export class Professional {
 
   @Column({ type: 'varchar', length: 200 })
   profession: string;
+
+  @OneToMany(type => Test, test => test.professional)
+  tests: Test[];
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

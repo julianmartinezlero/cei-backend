@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Child } from './child.entity';
+import { Test } from './test.entity';
 
 @Entity()
 export class Tutor {
@@ -33,4 +34,7 @@ export class Tutor {
   @OneToMany(type => Child, child => child.tutor, { cascade: true, eager: true })
   @JoinColumn()
   children: Child[];
+
+  @OneToMany(type => Test, test => test.tutor)
+  tests: Test[];
 }

@@ -2,7 +2,6 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { Crud } from '../interfaces/crud';
 import { TutorService } from './tutor.service';
 import { Tutor } from '../entity/tutor.entity';
-import { InsertResult } from 'typeorm';
 import { ChildService } from '../child/child.service';
 
 @Controller('tutor')
@@ -18,7 +17,7 @@ export class TutorController implements Crud {
 
   @Post()
   create(@Body() tutor: Tutor) {
-    const t: Tutor = {
+    const t: any = {
       id: null,
       name: tutor.name,
       lastName: tutor.lastName,
@@ -34,7 +33,14 @@ export class TutorController implements Crud {
     return tutorCreate.then(result => {
       tutor.children.map(c => {
         c.tutorId = result.identifiers[0].id;
+        // filebase64.decode(c.photo, 'text.new.txt', (erro, out) => {
+        //  c.photo = out;
+        //  fs.writeFile(c.photo., (err) => {
+        //     console.log('Successfully Written to File.');
+        //   });
+        // });
       });
+      // console.log;
       return this.childService.create(tutor.children);
     });
   }
