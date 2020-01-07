@@ -18,14 +18,12 @@ export class QuestionTestService implements Crud {
       'test.code,\n' +
       'test.questionState,\n' +
       'CONCAT(child.name, CONCAT(\' \',child.lastName)) AS name,\n' +
-      'CONCAT(tutor.name, CONCAT(\' \',tutor.lastName)) AS tutor,\n' +
       'CONCAT(professional.name, CONCAT(\' \',professional.lastName)) AS professional,\n' +
       'test.childId,\n' +
-      'test.tutorId,\n' +
+      'test.professionalId,\n' +
       'test.createdAt,\n' +
       'test.updatedAt\n' +
       'FROM test JOIN child ON test.childId=child.id\n' +
-      'LEFT JOIN tutor ON tutor.id = test.tutorId\n' +
       'LEFT JOIN professional ON professional.id = test.professionalId');
   }
 

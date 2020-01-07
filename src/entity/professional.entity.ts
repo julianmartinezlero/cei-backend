@@ -1,5 +1,7 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Test } from './test.entity';
+import { Child } from './child.entity';
+import { User } from './user.entity';
 
 @Entity()
 export class Professional {
@@ -18,20 +20,28 @@ export class Professional {
   @Column({ length: 10, unique: true })
   cell: string;
 
-  @Column({ length: 100, unique: true })
-  email: string;
+  // @Column({ length: 100, unique: true })
+  // email: string;
+  //
+  // @Column()
+  // password: string;
 
-  @Column()
-  password: string;
-
-  @Column({ type: 'varchar', length: 200 })
+  @Column({ type: 'varchar', length: 200, nullable: true })
   position: string;
 
-  @Column({ type: 'varchar', length: 200 })
+  @Column({ type: 'varchar', length: 200, nullable: true })
   profession: string;
 
   @OneToMany(type => Test, test => test.professional)
-  tests: Test[];
+  tests?: Test[];
+
+  @OneToMany(type => Child, child => child.professional, { cascade: true, eager: true })
+  @JoinColumn()
+  children?: Child[];
+
+  @OneToOne(type => User, { nullable: false })
+  @JoinColumn()
+  user: User;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

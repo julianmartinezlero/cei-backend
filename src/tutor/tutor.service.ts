@@ -1,21 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { Tutor } from '../entity/tutor.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Crud } from '../interfaces/crud';
+import { Professional } from '../entity/professional.entity';
 
 @Injectable()
 export class TutorService implements Crud {
   constructor(
-    @InjectRepository(Tutor)
-    private readonly tutorRepository: Repository<Tutor>,
+    @InjectRepository(Professional)
+    private readonly tutorRepository: Repository<Professional>,
   ) {}
-  async all(): Promise<Tutor[]> {
+
+  async all(): Promise<Professional[]> {
     return this.tutorRepository.createQueryBuilder('tutor')
       .leftJoinAndSelect('tutor.children', 'children')
       .getMany();
   }
-  async create(tutor: Tutor): Promise<any> {
+
+  async create(tutor: Professional): Promise<any> {
     return await this.tutorRepository.insert(tutor);
   }
 
@@ -35,5 +37,11 @@ export class TutorService implements Crud {
     return await this.tutorRepository.createQueryBuilder('user')
       .where('user.name like :name', {name: '%' + name + '%' })
       .getMany();
+  }
+
+  async searchByUserId(id: number): Promise<any> {
+    return await this.tutorRepository.createQueryBuilder('tutor')
+      .where('tutor.userId = :idUser', { idUser: id })
+      .getOne();
   }
 }

@@ -11,20 +11,20 @@ export class TestQuestionOption {
   @ManyToOne(type => Test, test => test.testResults, { nullable: false })
   test: Test;
 
-  @ManyToOne(type => Question, question => question.question)
+  @ManyToOne(type => Question, question => question)
   question: Question;
 
   @ManyToOne(type => QuestionOption, test => test.testQuestionOption, { nullable: false })
   questionOption: QuestionOption[];
 
   @Column()
-  testId: number;
+  testId?: number;
 
   @Column()
-  questionId: number;
+  questionId?: number;
 
   @Column()
-  questionOptionId: number;
+  questionOptionId?: number;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

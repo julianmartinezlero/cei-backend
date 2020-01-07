@@ -1,6 +1,6 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { Tutor } from './tutor.entity';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Test } from './test.entity';
+import { Professional } from './professional.entity';
 
 @Entity()
 export class Child {
@@ -25,13 +25,12 @@ export class Child {
   @Column({ nullable: true, type: 'longtext' })
   photo: any;
 
-  @ManyToOne(type => Tutor, tutor => tutor.children, { nullable: false, onDelete: 'CASCADE' })
-  tutor: Tutor;
-
-  @Column()
-  tutorId: number;
+  @ManyToOne(type => Professional, tutor => tutor.children, { nullable: false })
+  professional: Professional;
+  // professionalId: number;
 
   @OneToMany(type => Test, test => test.child)
+  @JoinColumn()
   tests: Test[];
 
   @CreateDateColumn({ type: 'timestamp' })

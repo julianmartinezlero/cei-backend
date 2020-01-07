@@ -2,7 +2,6 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, Pri
 import { Child } from './child.entity';
 import { TestQuestionOption } from './testQuestionOption.entity';
 import { Professional } from './professional.entity';
-import { Tutor } from './tutor.entity';
 
 @Entity()
 export class Test {
@@ -15,27 +14,22 @@ export class Test {
   @Column({ type: 'boolean', default: false })
   questionState: number;
 
+  @Column({ default: null, nullable: true })
+  totalValue: number;
+
   @OneToMany(type => TestQuestionOption, test => test.test)
   @JoinColumn()
   testResults: TestQuestionOption[];
 
   @ManyToOne(type => Child, child => child.tests)
-  child?: Child;
+  @JoinColumn()
+  child: Child;
 
-  @ManyToOne(type => Professional, professional => professional.tests, { nullable: true })
-  professional?: Professional;
+  @ManyToOne(type => Professional, professional => professional.tests, { nullable: false })
+  professional: Professional;
 
-  @ManyToOne(type => Tutor, tutor => tutor.tests, { nullable: true })
-  tutor?: Tutor;
-
-  @Column()
-  childId: number;
-
-  @Column()
-  professionalId: number;
-
-  @Column()
-  tutorId: number;
+  // @Column()
+  // childId: number;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

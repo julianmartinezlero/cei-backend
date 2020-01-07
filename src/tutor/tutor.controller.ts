@@ -1,55 +1,49 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Request, UseGuards } from '@nestjs/common';
 import { Crud } from '../interfaces/crud';
 import { TutorService } from './tutor.service';
-import { Tutor } from '../entity/tutor.entity';
 import { ChildService } from '../child/child.service';
+import { Professional } from '../entity/professional.entity';
+import { UsersService } from '../users/users.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('tutor')
 export class TutorController implements Crud {
   constructor(private readonly tutorService: TutorService,
+              private readonly userService: UsersService,
               private readonly childService: ChildService) {
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
-  all(): Promise<Tutor[]> {
+  all(): Promise<Professional[]> {
     return this.tutorService.all();
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
-  create(@Body() tutor: Tutor) {
-    const t: any = {
+  create(@Body() tutor, @Request() req) {
+    const t = {
       id: null,
       name: tutor.name,
       lastName: tutor.lastName,
       ci: tutor.ci,
       cell: tutor.cell,
-      email: tutor.email,
-      password: tutor.password,
+      position: tutor.position,
+      profession: tutor.profession,
       createdAt: new Date(),
       updatedAt: new Date(),
-      children: tutor.children,
+      user: req.user,
     };
-    const tutorCreate = this.tutorService.create(t);
-    return tutorCreate.then(result => {
-      tutor.children.map(c => {
-        c.tutorId = result.identifiers[0].id;
-        // filebase64.decode(c.photo, 'text.new.txt', (erro, out) => {
-        //  c.photo = out;
-        //  fs.writeFile(c.photo., (err) => {
-        //     console.log('Successfully Written to File.');
-        //   });
-        // });
-      });
-      // console.log;
-      return this.childService.create(tutor.children);
-    });
+    return this.tutorService.create(t);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   show(@Param() params) {
     return this.tutorService.show(params.id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Put(':id')
   update(@Param() params, @Body() tutor) {
     const w = {
@@ -57,18 +51,18 @@ export class TutorController implements Crud {
       lastName: tutor.lastName,
       ci: tutor.ci,
       cell: tutor.cell,
-      email: tutor.email,
-      password: tutor.password,
       updatedAt: new Date(),
     };
     return this.tutorService.update(params.id, w);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   delete(@Param() params) {
     return this.tutorService.delete(params.id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('search/:name')
   search(@Param() param) {
     return this.tutorService.search(param.name);
