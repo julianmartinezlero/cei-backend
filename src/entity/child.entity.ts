@@ -27,7 +27,6 @@ export class Child {
 
   @ManyToOne(type => Professional, tutor => tutor.children, { nullable: false })
   professional: Professional;
-  // professionalId: number;
 
   @OneToMany(type => Test, test => test.child)
   @JoinColumn()

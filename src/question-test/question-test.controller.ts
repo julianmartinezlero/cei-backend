@@ -35,6 +35,7 @@ export class QuestionTestController implements Crud {
           createdAt: new Date(),
           updatedAt: new Date(),
           questionState: test.questionState,
+          totalValue: test.totalValue,
           testResults: null,
         };
         return this.testService.create(t).then(r => {

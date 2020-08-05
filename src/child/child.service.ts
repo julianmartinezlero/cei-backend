@@ -43,6 +43,8 @@ export class ChildService implements Crud {
 
   async ofTutor(idTutor: number): Promise<any> {
     return await this.childRepository.createQueryBuilder('child')
-      .where('child.professionalId = :idT', { idT: idTutor }).getMany();
+      .where('child.professionalId = :idT', { idT: idTutor })
+      .leftJoinAndSelect('child.tests', 'tests')
+      .getMany();
   }
 }

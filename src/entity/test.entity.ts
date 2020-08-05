@@ -14,7 +14,7 @@ export class Test {
   @Column({ type: 'boolean', default: false })
   questionState: number;
 
-  @Column({ default: null, nullable: true })
+  @Column({ type: 'double', default: null, nullable: true })
   totalValue: number;
 
   @OneToMany(type => TestQuestionOption, test => test.test)

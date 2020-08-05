@@ -7,6 +7,7 @@ import { QuestionTestModule } from './question-test/question-test.module';
 import { OrmConfig } from './ormconfig';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { TreatmentModule } from './treatment/treatment.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { UsersModule } from './users/users.module';
     ProfessionalModule,
     QuestionTestModule,
     UsersModule,
+    TreatmentModule,
   ],
 })
 export class AppModule {}
