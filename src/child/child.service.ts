@@ -31,8 +31,8 @@ export class ChildService implements Crud {
     return await this.childRepository.delete(id);
   }
 
-  async show(id: number): Promise<any> {
-    return await this.childRepository.findOne(id);
+  async show(id: number) {
+    return this.childRepository.findOne(id);
   }
 
   async search(name: string): Promise<any> {

@@ -9,5 +9,6 @@ export const OrmConfig: ConnectionOptions = {
   password: '',
   database: 'db_cei',
   entities: [join(__dirname, '**/**.entity{.ts,.js}')],
+  // debug: true,
   synchronize: true,
 };

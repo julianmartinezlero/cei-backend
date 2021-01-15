@@ -13,7 +13,9 @@ export class ProfessionalService implements Crud {
   }
 
   async all(): Promise<Professional[]> {
-    return await this.professionalRepository.createQueryBuilder().getMany();
+    return await this.professionalRepository.createQueryBuilder()
+      .where('position IS NOT NULL')
+      .getMany();
   }
 
   async create(professional: Professional): Promise<any> {

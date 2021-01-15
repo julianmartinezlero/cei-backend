@@ -60,7 +60,7 @@ export const QUESTIONS_DATA: Question[] = [
   {
     id: 8,
     question: 'Se le pide leer una oracion sin sentido',
-    details: 'Abra llos recursos',
+    details: 'Abra los recursos',
     questionType: 'escrito',
     createdAt: new Date(),
     updatedAt: new Date(),

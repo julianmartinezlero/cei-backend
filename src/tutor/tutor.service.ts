@@ -14,6 +14,7 @@ export class TutorService implements Crud {
   async all(): Promise<Professional[]> {
     return this.tutorRepository.createQueryBuilder('tutor')
       .leftJoinAndSelect('tutor.children', 'children')
+      .where('tutor.position IS NULL')
       .getMany();
   }
 

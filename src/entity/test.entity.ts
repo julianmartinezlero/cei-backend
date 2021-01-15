@@ -8,16 +8,16 @@ export class Test {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 30 })
+  @Column({ type: 'varchar', length: 10 })
   code: string;
 
   @Column({ type: 'boolean', default: false })
-  questionState: number;
+  questionState: boolean| number;
 
   @Column({ type: 'double', default: null, nullable: true })
   totalValue: number;
 
-  @OneToMany(type => TestQuestionOption, test => test.test)
+  @OneToMany(type => TestQuestionOption, test => test.test, {nullable: true})
   @JoinColumn()
   testResults: TestQuestionOption[];
 
@@ -26,6 +26,7 @@ export class Test {
   child: Child;
 
   @ManyToOne(type => Professional, professional => professional.tests, { nullable: false })
+  @JoinColumn()
   professional: Professional;
 
   // @Column()

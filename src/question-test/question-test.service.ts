@@ -1,38 +1,46 @@
 import { Injectable } from '@nestjs/common';
 import { Crud } from '../interfaces/crud';
 import { Test } from '../entity/test.entity';
-import { Repository } from 'typeorm';
+import {getConnection, Repository} from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Question } from '../entity/question.entity';
 
 @Injectable()
 export class QuestionTestService implements Crud {
-  constructor(@InjectRepository(Test) private readonly testRepository: Repository<Test>,
-              @InjectRepository(Question) private readonly questionRepository: Repository<Question>) {
+  constructor(@InjectRepository(Test) private testRepository: Repository<Test>,
+              @InjectRepository(Question) private questionRepository: Repository<Question>) {
   }
 
   async all(): Promise<Test[]> {
-    return await this.testRepository.query(
-      'SELECT\n' +
-      'test.id,\n' +
-      'test.code,\n' +
-      'test.questionState,\n' +
-      'CONCAT(child.name, CONCAT(\' \',child.lastName)) AS name,\n' +
-      'CONCAT(professional.name, CONCAT(\' \',professional.lastName)) AS professional,\n' +
-      'test.childId,\n' +
-      'test.professionalId,\n' +
-      'test.createdAt,\n' +
-      'test.updatedAt\n' +
-      'FROM test JOIN child ON test.childId=child.id\n' +
-      'LEFT JOIN professional ON professional.id = test.professionalId');
+    // return await this.testRepository.query(
+    //   'SELECT\n' +
+    //   'test.id,\n' +
+    //   'test.code,\n' +
+    //   'test.questionState,\n' +
+    //   'CONCAT(child.name, CONCAT(\' \',child.lastName)) AS name,\n' +
+    //   'CONCAT(professional.name, CONCAT(\' \',professional.lastName)) AS professional,\n' +
+    //   'test.childId,\n' +
+    //   'test.professionalId,\n' +
+    //   'test.createdAt,\n' +
+    //   'test.updatedAt\n' +
+    //   'FROM test JOIN child ON test.childId=child.id\n' +
+    //   'LEFT JOIN professional ON professional.id = test.professionalId');
+    return this.testRepository.createQueryBuilder('t')
+      .innerJoinAndSelect('t.professional', 'professional')
+      .innerJoinAndSelect('t.child', 'child')
+      .getMany();
   }
 
   async create(test: Test): Promise<any> {
     return await this.testRepository.insert(test);
   }
 
-  async show(id: any): Promise<any> {
-    return await this.testRepository.findOne(id);
+  async show(id: any) {
+    return this.testRepository.createQueryBuilder('test')
+      .innerJoinAndSelect('test.child', 'child')
+      .innerJoinAndSelect('test.professional', 'professional')
+      .where('test.id = :a', {a: id})
+      .getOne();
   }
 
   async update(id: any, test): Promise<any> {

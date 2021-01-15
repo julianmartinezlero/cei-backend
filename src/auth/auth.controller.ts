@@ -3,6 +3,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { User } from '../entity/user.entity';
+import {getConnection} from 'typeorm';
+import {Professional} from '../entity/professional.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -17,17 +19,48 @@ export class AuthController {
 
   // @UseGuards(AuthGuard('local'))
   @Post('register')
-  async register(@Body() body) {
-    const u = new User();
-    u.email = body.email;
-    u.password = body.password;
-    u.updatedAt = new Date();
-    u.createdAt = new Date();
+  async register(@Body() professional) {
+    // const u = new User();
+    // u.email = body.email;
+    // u.password = body.password;
+    // u.updatedAt = new Date();
+    // u.createdAt = new Date();
+
+    const query = getConnection().createQueryRunner();
+    await query.startTransaction();
     try {
-      return this.userService.create(u).then(res => {
-        return this.authService.login(u);
-      });
+      const user = {
+        id: null,
+        email: professional.email,
+        username: professional.name + professional.lastName,
+        password: professional.password,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      const t = {
+        id: null,
+        name: professional.name,
+        lastName: professional.lastName,
+        ci: professional.ci,
+        cell: professional.cell,
+        // position: professional.position ? professional.position : null,
+        // profession: professional.profession ? professional.profession : null,
+        // createdAt: new Date(),
+        // updatedAt: new Date(),
+        user,
+      };
+
+      await query.manager.save(User, t.user);
+      await query.manager.save(Professional, t);
+      await query.commitTransaction();
+
+    // try {
+    //   return this.userService.create(u).then(res => {
+      return this.authService.login(user);
+      // });
     } catch (e) {
+      await query.rollbackTransaction();
       return { error: 'already exist' };
     }
   }

@@ -14,6 +14,9 @@ export class Question {
   @Column({ type: 'varchar', length: 300 })
   details: string;
 
+  // @Column({ type: 'boolean', default: false})
+  // withResource: boolean;
+
   @Column({ type: 'varchar', length: 20 })
   questionType: string;
 

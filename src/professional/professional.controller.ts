@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpException, Param, Post, Put, UseGuards} from '@nestjs/common';
 import { Professional } from '../entity/professional.entity';
 import { Crud } from '../interfaces/crud';
 import { ProfessionalService } from './professional.service';
 import { UsersService } from '../users/users.service';
 import { AuthGuard } from '@nestjs/passport';
+import {getConnection} from 'typeorm';
+import {User} from '../entity/user.entity';
 
 @Controller('professional')
 export class ProfessionalController implements Crud {
@@ -20,30 +22,45 @@ export class ProfessionalController implements Crud {
 
   @UseGuards(AuthGuard('jwt'))
   @Post()
-  create(@Body() professional: any) {
-    const t = {
-      id: null,
-      name: professional.name,
-      lastName: professional.lastName,
-      ci: professional.ci,
-      cell: professional.cell,
-      position: professional.position,
-      profession: professional.profession,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      user: {
+  async create(@Body() professional: any) {
+    const query = getConnection().createQueryRunner();
+    await query.startTransaction();
+    try {
+      const user = {
+          id: null,
+          email: professional.email,
+          username: professional.name + professional.lastName,
+          password: professional.password,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        };
+
+      const t = {
         id: null,
-        email: professional.email,
-        password: professional.password,
+        name: professional.name,
+        lastName: professional.lastName,
+        ci: professional.ci,
+        cell: professional.cell,
+        position: professional.position,
+        profession: professional.profession,
         createdAt: new Date(),
         updatedAt: new Date(),
-      },
-    };
-    return this.userService.create(t.user).then(result => {
-      this.professionalService.create(t).then(res => {
-        return res;
-      });
-    });
+        user,
+      };
+
+      await query.manager.save(User, t.user);
+      await query.manager.save(Professional, t);
+      await query.commitTransaction();
+      return {
+        message: 'Registrado',
+      };
+    } catch (e) {
+      console.log(e);
+      await query.rollbackTransaction();
+      throw new HttpException('Error', 406);
+    } finally {
+      await query.release();
+    }
   }
 
   @UseGuards(AuthGuard('jwt'))
