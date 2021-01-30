@@ -19,13 +19,14 @@ export class Child {
   @Column({ type: 'varchar', length: 9 })
   sex: string;
 
-  @Column({ length: 10, nullable: true })
+  @Column({ length: 10, nullable: false, unique: true })
   ci: string;
 
   @Column({ nullable: true, type: 'longtext' })
   photo: any;
 
   @ManyToOne(type => Professional, tutor => tutor.children, { nullable: false })
+  @JoinColumn()
   professional: Professional;
 
   @OneToMany(type => Test, test => test.child)

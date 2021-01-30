@@ -16,6 +16,7 @@ export class ChildService implements Crud {
     // return await this.tutorRepository.createQueryBuilder().getMany();
     return this.childRepository.createQueryBuilder('child')
       .leftJoinAndSelect('child.professional', 'professional')
+      .where('professional.deleteAt IS NULL')
       .getMany();
   }
 
@@ -43,8 +44,14 @@ export class ChildService implements Crud {
 
   async ofTutor(idTutor: number): Promise<any> {
     return await this.childRepository.createQueryBuilder('child')
-      .where('child.professionalId = :idT', { idT: idTutor })
+      .where('child.professional.id = :idT', { idT: idTutor })
       .leftJoinAndSelect('child.tests', 'tests')
       .getMany();
+  }
+
+  async findChildByCI(ci: string) {
+    return await this.childRepository.createQueryBuilder('p')
+      .where('p.ci = :ci', {ci})
+      .getOne();
   }
 }

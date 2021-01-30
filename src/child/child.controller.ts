@@ -1,13 +1,18 @@
-import { Body, Controller, Delete, Get, Param, Request, Post, Put, UseGuards } from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Request, Post, Put, UseGuards, Req, HttpException} from '@nestjs/common';
 import { Crud } from '../interfaces/crud';
 import { Child } from '../entity/child.entity';
 import { ChildService } from './child.service';
 import { AuthGuard } from '@nestjs/passport';
 import { TutorService } from '../tutor/tutor.service';
+import {UsersService} from '../users/users.service';
+import {ancestorWhere} from 'tslint';
+import {ProfessionalService} from '../professional/professional.service';
 
 @Controller('child')
 export class ChildController implements Crud {
   constructor(private readonly childService: ChildService,
+              private userService: UsersService,
+              private professionalService: ProfessionalService,
               private readonly tutorService: TutorService) {
   }
 
@@ -19,21 +24,33 @@ export class ChildController implements Crud {
 
   @UseGuards(AuthGuard('jwt'))
   @Post()
-  create(@Body() child: Child) {
-    const t: Child = {
-      id: null,
-      name: child.name,
-      lastName: child.lastName,
-      ci: child.ci,
-      birthDate: child.birthDate,
-      sex: child.sex,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      professional: child.professional,
-      photo: child.photo,
-      tests: null,
+  async create(@Body() boby, @Req() req) {
+    const user = await this.userService.show(req.user.id);
+    let professional;
+
+    const exist = await this.childService.findChildByCI(boby.ci);
+
+    if (exist !== undefined) {
+      throw new HttpException('Ya se encuentra registrado', 406);
+    }
+
+    if (user.professional.position != null) {
+      professional = await this.professionalService.show(boby.professionalId);
+    } else {
+      professional = user.professional;
+    }
+    const t = new Child();
+    t.name = boby.name;
+    t.lastName = boby.lastName;
+    t.ci = boby.ci;
+    t.birthDate = boby.birthDate;
+    t.sex = boby.sex;
+    t.professional = professional;
+    t.photo = boby.photo;
+    return {
+      message: 'Registrado',
+      data: await this.childService.create(t),
     };
-    return this.childService.create(t);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -70,9 +87,15 @@ export class ChildController implements Crud {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('ofTutor/all')
-  allChildOfTutor(@Request() req) {
-    return this.tutorService.searchByUserId(req.user.id).then(res => {
-      return this.childService.ofTutor(res.id);
-    });
+  async allChildOfTutor(@Request() req) {
+    const user = await this.userService.show(req.user.id);
+    return await this.childService.ofTutor(user.professional.id);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('childTutor/:tutorId')
+  async childOfTutor(@Param() params) {
+    const tutor = await this.tutorService.searchByUserId(params.tutorId);
+    return await this.childService.ofTutor(tutor.id);
   }
 }

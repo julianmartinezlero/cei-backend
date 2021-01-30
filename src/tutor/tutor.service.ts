@@ -15,6 +15,7 @@ export class TutorService implements Crud {
     return this.tutorRepository.createQueryBuilder('tutor')
       .leftJoinAndSelect('tutor.children', 'children')
       .where('tutor.position IS NULL')
+      // .andWhere('')
       .getMany();
   }
 
@@ -27,11 +28,13 @@ export class TutorService implements Crud {
   }
 
   async delete(id: number): Promise<any> {
-    return await this.tutorRepository.delete(id);
+    return await this.tutorRepository.softDelete(id);
   }
 
-  async show(id: number): Promise<any> {
-    return await this.tutorRepository.findOne(id);
+  async show(id: number) {
+    return await this.tutorRepository.createQueryBuilder('d')
+      .where('d.id = :id', { id})
+      .getOne();
   }
 
   async search(name: string): Promise<any> {
@@ -40,9 +43,21 @@ export class TutorService implements Crud {
       .getMany();
   }
 
-  async searchByUserId(id: number): Promise<any> {
-    return await this.tutorRepository.createQueryBuilder('tutor')
-      .where('tutor.userId = :idUser', { idUser: id })
+  async searchByUserId(id: number) {
+    return this.tutorRepository.createQueryBuilder('tutor')
+      .where('tutor.user.id = :idUser', { idUser: id })
+      .getOne();
+  }
+
+  async findTutorByCI(ci: string) {
+    return await this.tutorRepository.createQueryBuilder('p')
+      .where('p.ci = :ci', {ci})
+      .getOne();
+  }
+
+  async findTutorById(id: any) {
+    return this.tutorRepository.createQueryBuilder('p')
+      .where('p.id = :id', {id})
       .getOne();
   }
 }

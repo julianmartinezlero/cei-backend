@@ -15,6 +15,7 @@ export class ProfessionalService implements Crud {
   async all(): Promise<Professional[]> {
     return await this.professionalRepository.createQueryBuilder()
       .where('position IS NOT NULL')
+      .andWhere(`position != 'Administrador'`)
       .getMany();
   }
 
@@ -27,7 +28,7 @@ export class ProfessionalService implements Crud {
   }
 
   async delete(id: number): Promise<any> {
-    return await this.professionalRepository.delete(id);
+    return await this.professionalRepository.softDelete(id);
   }
 
   async show(id: number): Promise<any> {
@@ -38,5 +39,17 @@ export class ProfessionalService implements Crud {
     return await this.professionalRepository.createQueryBuilder('user')
       .where('user.name like :name', { name: '%' + name + '%' })
       .getMany();
+  }
+
+  async findProfessionalByCI(ci: string) {
+    return this.professionalRepository.createQueryBuilder('p')
+      .where('p.ci = :ci', {ci})
+      .getOne();
+  }
+
+  async findProfessionalById(id: any) {
+    return this.professionalRepository.createQueryBuilder('p')
+      .where('p.id = :id', {id})
+      .getOne();
   }
 }

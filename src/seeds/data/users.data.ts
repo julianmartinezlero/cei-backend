@@ -1,4 +1,5 @@
 import {User} from '../../entity/user.entity';
+import {Professional} from '../../entity/professional.entity';
 
 export const USERS: User[] = [
   {

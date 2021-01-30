@@ -28,6 +28,8 @@ export class QuestionTestService implements Crud {
     return this.testRepository.createQueryBuilder('t')
       .innerJoinAndSelect('t.professional', 'professional')
       .innerJoinAndSelect('t.child', 'child')
+      .innerJoin('child.professional', 'tutor')
+      .where('tutor.deleteAt IS NULL')
       .getMany();
   }
 
@@ -40,6 +42,7 @@ export class QuestionTestService implements Crud {
       .innerJoinAndSelect('test.child', 'child')
       .innerJoinAndSelect('test.professional', 'professional')
       .where('test.id = :a', {a: id})
+      .andWhere('professional.deleteAt IS NULL')
       .getOne();
   }
 

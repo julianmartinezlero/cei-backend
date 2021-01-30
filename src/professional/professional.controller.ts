@@ -6,6 +6,7 @@ import { UsersService } from '../users/users.service';
 import { AuthGuard } from '@nestjs/passport';
 import {getConnection} from 'typeorm';
 import {User} from '../entity/user.entity';
+import {ancestorWhere} from 'tslint';
 
 @Controller('professional')
 export class ProfessionalController implements Crud {
@@ -24,6 +25,12 @@ export class ProfessionalController implements Crud {
   @Post()
   async create(@Body() professional: any) {
     const query = getConnection().createQueryRunner();
+    const exist = await this.professionalService.findProfessionalByCI(professional.ci);
+
+    if (exist !== undefined) {
+      throw new HttpException('Ya se encuentra registrado', 406);
+    }
+
     await query.startTransaction();
     try {
       const user = {
@@ -55,6 +62,7 @@ export class ProfessionalController implements Crud {
         message: 'Registrado',
       };
     } catch (e) {
+      // tslint:disable-next-line:no-console
       console.log(e);
       await query.rollbackTransaction();
       throw new HttpException('Error', 406);
@@ -71,19 +79,17 @@ export class ProfessionalController implements Crud {
 
   @UseGuards(AuthGuard('jwt'))
   @Put(':id')
-  update(@Param() params, @Body() professional: Professional) {
-    const w = {
-      name: professional.name,
-      lastName: professional.lastName,
-      ci: professional.ci,
-      cell: professional.cell,
-      // email: professional.email,
-      // password: professional.password,
-      position: professional.position,
-      profession: professional.profession,
-      updatedAt: new Date(),
+  async update(@Param() params, @Body() body: Professional) {
+    const professional = await this.professionalService.findProfessionalById(params.id);
+    professional.name = body.name;
+    professional.lastName = body.lastName;
+    professional.cell = body.cell;
+    professional.position = body.position;
+    professional.profession = body.profession;
+    return {
+      message: 'Actualizado',
+      data: await this.professionalService.update(params.id, professional),
     };
-    return this.professionalService.update(params.id, w);
   }
 
   @UseGuards(AuthGuard('jwt'))

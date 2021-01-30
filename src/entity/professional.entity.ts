@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm';
 import { Test } from './test.entity';
 import { Child } from './child.entity';
 import { User } from './user.entity';
@@ -17,7 +17,7 @@ export class Professional {
   @Column({ length: 10, unique: true })
   ci: string;
 
-  @Column({ length: 10, unique: true })
+  @Column({ length: 10 })
   cell: string;
 
   // @Column({ length: 100, unique: true })
@@ -43,9 +43,15 @@ export class Professional {
   @JoinColumn()
   user: User;
 
+  @Column({ type: 'boolean', nullable: false, default: true })
+  isProfessional: boolean;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
+
+  @DeleteDateColumn({ type: 'timestamp'})
+  deleteAt?: Date;
 }

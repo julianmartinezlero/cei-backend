@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Request, UseGuards } from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpException, Param, Post, Put, Request, UseGuards} from '@nestjs/common';
 import { Crud } from '../interfaces/crud';
 import { TutorService } from './tutor.service';
 import { Professional } from '../entity/professional.entity';
@@ -24,32 +24,47 @@ export class TutorController implements Crud {
 
   @Post('create')
   async createTutor(@Body() body) {
-    const user = new User();
-    user.email = body.email;
-    user.password = body.password;
+    const query = getConnection().createQueryRunner();
 
-    const tutor = new Professional();
-    tutor.name = body.name;
-    tutor.lastName = body.lastName;
-    tutor.ci = body.ci;
-    tutor.cell = body.cell;
-    tutor.position = body.position;
-    tutor.user = user;
+    const exist = await this.tutorService.findTutorByCI(body.ci);
 
-    const children = await this.processChildren(tutor, body.children);
-    return getConnection().transaction(async () => {
-      return [
-        await this.usersService.create(user),
-        await this.tutorService.create(tutor),
-        await this.childService.create(children),
-      ];
-    });
+    if (exist !== undefined) {
+      throw new HttpException('Ya se encuentra registrado', 406);
+    }
 
+    await query.startTransaction();
+    try {
+      const user = new User();
+      user.email = body.email;
+      user.password = body.password;
+
+      const tutor = new Professional();
+      tutor.name = body.name;
+      tutor.lastName = body.lastName;
+      tutor.ci = body.ci;
+      tutor.cell = body.cell;
+      tutor.position = body.position;
+      tutor.user = user;
+
+      await query.manager.save(User, user);
+      await query.manager.save(Professional, tutor);
+      await query.commitTransaction();
+      return {
+        message: 'Guardado',
+      };
+    } catch (e) {
+      // tslint:disable-next-line:no-console
+      console.log(e);
+      await query.rollbackTransaction();
+      throw new HttpException('ya Existe', 406);
+    } finally {
+      await query.release();
+    }
   }
 
   @Post()
-  create(@Body() tutor, @Request() req) {
-    const t: Professional = {
+  async create(@Body() tutor, @Request() req) {
+    const t: any = {
       id: null,
       name: tutor.name,
       lastName: tutor.lastName,
@@ -61,7 +76,10 @@ export class TutorController implements Crud {
       updatedAt: new Date(),
       user: req.user,
     };
-    return this.tutorService.create(t);
+    return {
+      message: 'Guardado',
+      data: await this.tutorService.create(t),
+    };
   }
 
   @Get(':id')
@@ -70,20 +88,23 @@ export class TutorController implements Crud {
   }
 
   @Put(':id')
-  update(@Param() params, @Body() tutor) {
-    const w = {
-      name: tutor.name,
-      lastName: tutor.lastName,
-      ci: tutor.ci,
-      cell: tutor.cell,
-      updatedAt: new Date(),
+  async update(@Param() params, @Body() body) {
+    const tutor = await this.tutorService.findTutorById(params.id);
+    tutor.lastName = body.lastName;
+    tutor.name = body.name;
+    tutor.cell = body.cell;
+    return {
+      message: 'Actualizado',
+      data: await this.tutorService.update(params.id, tutor),
     };
-    return this.tutorService.update(params.id, w);
   }
 
   @Delete(':id')
-  delete(@Param() params) {
-    return this.tutorService.delete(params.id);
+  async delete(@Param() params) {
+    return {
+      message: 'Eliminado',
+      data: await this.tutorService.delete(params.id),
+    };
   }
 
   @Get('search/:name')

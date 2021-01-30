@@ -6,16 +6,16 @@ import {User} from '../../entity/user.entity';
 export class UserSeed extends Seed {
 
   static async run(): Promise<void> {
-    await this.connection.then(res => {
-      res.createQueryBuilder()
+    try {
+      const s = await this.connection;
+      await s.createQueryBuilder()
         .insert()
         .into(User)
         .values(USERS)
-        .execute().then(f => {
-        log(`success ${this.name} seed \n`);
-      }).catch(er => {
-        error(er);
-      });
-    });
+        .execute();
+      log(`success ${this.name} seed \n`);
+    } catch (e) {
+      error(e);
+    }
   }
 }

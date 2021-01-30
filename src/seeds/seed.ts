@@ -5,7 +5,7 @@ export class Seed implements InterfaceSeed {
   protected static connection = createConnection(OrmConfig);
 
   // tslint:disable-next-line:no-empty
-  run() {
+  async run() {
   }
 }
 
