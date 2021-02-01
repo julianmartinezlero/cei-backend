@@ -13,7 +13,7 @@ export class TreatmentService {
   }
 
   async getTreatments(id) {
-    return await this.treatment.createQueryBuilder('treatment')
+    return this.treatment.createQueryBuilder('treatment')
       .where('treatment.range = :range', { range: id })
       .getMany();
   }

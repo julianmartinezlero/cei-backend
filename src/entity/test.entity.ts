@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, Pri
 import { Child } from './child.entity';
 import { TestQuestionOption } from './testQuestionOption.entity';
 import { Professional } from './professional.entity';
+import {TreatmentChild} from './treatmentChild.entity';
 
 @Entity()
 export class Test {
@@ -29,8 +30,9 @@ export class Test {
   @JoinColumn()
   professional: Professional;
 
-  // @Column()
-  // childId: number;
+  @OneToMany(type => TreatmentChild, treatmentChild => treatmentChild.test)
+  @JoinColumn()
+  treatmentChildren: TreatmentChild[];
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

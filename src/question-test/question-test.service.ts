@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Crud } from '../interfaces/crud';
 import { Test } from '../entity/test.entity';
-import {getConnection, Repository} from 'typeorm';
+import {getConnection, QueryRunner, Repository} from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Question } from '../entity/question.entity';
 
@@ -37,13 +37,19 @@ export class QuestionTestService implements Crud {
     return await this.testRepository.insert(test);
   }
 
-  async show(id: any) {
-    return this.testRepository.createQueryBuilder('test')
-      .innerJoinAndSelect('test.child', 'child')
-      .innerJoinAndSelect('test.professional', 'professional')
-      .where('test.id = :a', {a: id})
-      .andWhere('professional.deleteAt IS NULL')
-      .getOne();
+  async show(id: any, query?: QueryRunner) {
+    let q = this.testRepository.createQueryBuilder('test');
+    if (query) {
+      q = query.manager.getRepository(Test).createQueryBuilder('test');
+    }
+
+    q.innerJoinAndSelect('test.child', 'child')
+    .innerJoinAndSelect('test.professional', 'professional')
+    .innerJoinAndSelect('test.treatmentChildren', 'treatmentChildren')
+    .innerJoinAndSelect('treatmentChildren.treatment', 'treatment')
+    .where('test.id = :a', {a: id});
+      // .andWhere('professional.deleteAt IS NULL')
+    return q.getOne();
   }
 
   async update(id: any, test): Promise<any> {
@@ -58,6 +64,15 @@ export class QuestionTestService implements Crud {
     return await this.questionRepository.createQueryBuilder('question')
       .leftJoinAndSelect('question.questionOptions', 'options')
       .leftJoinAndSelect('question.questionAssets', 'assets')
+      .getMany();
+  }
+
+  async testChild(childId: any) {
+    return this.testRepository.createQueryBuilder('test')
+      .innerJoinAndSelect('test.treatmentChildren', 'treatmentChildren')
+      .innerJoinAndSelect('treatmentChildren.treatment', 'treatment')
+      .innerJoinAndSelect('test.child', 'child')
+      .where('child.id = :id', {id: childId})
       .getMany();
   }
 }

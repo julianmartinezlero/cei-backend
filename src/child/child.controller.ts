@@ -95,7 +95,7 @@ export class ChildController implements Crud {
   @UseGuards(AuthGuard('jwt'))
   @Get('childTutor/:tutorId')
   async childOfTutor(@Param() params) {
-    const tutor = await this.tutorService.searchByUserId(params.tutorId);
+    const tutor = await this.tutorService.findTutorById(params.tutorId);
     return await this.childService.ofTutor(tutor.id);
   }
 }

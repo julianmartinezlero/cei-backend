@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {TreatmentChild} from './treatmentChild.entity';
 
 @Entity()
 export class Treatment {
@@ -13,4 +14,8 @@ export class Treatment {
 
   @Column({ type: 'int' })
   sessions: number;
+
+  @OneToMany(type => TreatmentChild, treatmentChild => treatmentChild.treatment)
+  @JoinColumn()
+  treatmentChildren: TreatmentChild[];
 }

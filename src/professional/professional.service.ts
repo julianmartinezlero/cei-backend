@@ -52,4 +52,11 @@ export class ProfessionalService implements Crud {
       .where('p.id = :id', {id})
       .getOne();
   }
+
+  async findProfessionalByUserId(id: null | number | number) {
+    return this.professionalRepository.createQueryBuilder('p')
+      .innerJoin('p.user', 'user')
+      .where('user.id = :id', {id})
+      .getOne();
+  }
 }
