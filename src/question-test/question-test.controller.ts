@@ -102,7 +102,7 @@ export class QuestionTestController {
       test.professional =  professional;
       test.child = body.child;
       test.questionState = true;
-      test.totalValue = body.totalValue;
+      test.totalValue = body.totalValue.toFixed(2);
       await query.manager.save(Test, test);
       const solutions = [];
       for (const s of body.solution) {
