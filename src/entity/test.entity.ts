@@ -3,6 +3,7 @@ import { Child } from './child.entity';
 import { TestQuestionOption } from './testQuestionOption.entity';
 import { Professional } from './professional.entity';
 import {TreatmentChild} from './treatmentChild.entity';
+import {TreatmentChildSession} from './treatmentChildSession.entity';
 
 @Entity()
 export class Test {
@@ -33,6 +34,10 @@ export class Test {
   @OneToMany(type => TreatmentChild, treatmentChild => treatmentChild.test)
   @JoinColumn()
   treatmentChildren: TreatmentChild[];
+
+  @OneToMany(type => TreatmentChildSession, treatmentChildSession => treatmentChildSession.test)
+  @JoinColumn()
+  treatmentChildSessions: TreatmentChildSession[];
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

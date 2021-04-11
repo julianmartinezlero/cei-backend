@@ -1,6 +1,5 @@
-import {Body, Controller, Delete, Get, HttpException, Param, Post, Put, Req, Request, UseGuards} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpException, Param, Post, Req, Request, UseGuards} from '@nestjs/common';
 import {QuestionTestService} from './question-test.service';
-import {Crud} from '../interfaces/crud';
 import {Test} from '../entity/test.entity';
 import {AuthGuard} from '@nestjs/passport';
 import {UsersService} from '../users/users.service';
@@ -11,8 +10,9 @@ import {getConnection, QueryRunner} from 'typeorm';
 import {TestQuestionOption} from '../entity/testQuestionOption.entity';
 import {ProfessionalService} from '../professional/professional.service';
 import {TreatmentService} from '../treatment/treatment.service';
-import {Treatment} from '../entity/treatment.entity';
 import {TreatmentChild} from '../entity/treatmentChild.entity';
+import {TreatmentChildSession} from '../entity/treatmentChildSession.entity';
+import * as moment from 'moment';
 
 @Controller('question-test')
 export class QuestionTestController {
@@ -30,47 +30,11 @@ export class QuestionTestController {
     return await this.testService.all();
   }
 
-  // @UseGuards(AuthGuard('jwt'))
-  // @Post()
-  // async create(@Body() test: any, @Request() req) {
-  //   const user = await this.userService.show(req.user.id);
-  //   const child = await this.childService.show(test.childId);
-  //   const t: Test = {
-  //       id: null,
-  //       code: randomId(),
-  //       professional: user.professional,
-  //       child,
-  //       createdAt: new Date(),
-  //       updatedAt: new Date(),
-  //       questionState: false,
-  //       totalValue: test.totalValue,
-  //       testResults: null,
-  //     };
-  //   return this.testService.create(t).then(r => {
-  //         return t;
-  //   });
-  // }
-
   @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   async show(@Param() params) {
     return await this.testService.show(Number(params.id));
   }
-  //
-  // @UseGuards(AuthGuard('jwt'))
-  // @Put(':id')
-  // update(@Param() params, @Body() test: any) {
-  //   const t = {
-  //     id: test.id,
-  //     child: test.child,
-  //     code: test.code,
-  //     testResults: test.testResults,
-  //     questionType: test.questionType,
-  //     updatedAt: new Date(),
-  //     questionValue: test.questionValue,
-  //   };
-  //   return this.testService.update(params.id, t);
-  // }
 
   @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
@@ -93,6 +57,7 @@ export class QuestionTestController {
   @UseGuards(AuthGuard('jwt'))
   @Post('solved/save')
   async solved(@Body() body, @Req() req) {
+    let testResult: Test;
     const professional = await this.professionalService.findProfessionalByUserId(req.user.id);
     const query = getConnection().createQueryRunner();
     await query.startTransaction();
@@ -111,10 +76,28 @@ export class QuestionTestController {
       }
       await query.manager.save(TestQuestionOption, solutions);
       await this.createTreatment(test, query);
+      testResult = await this.testService.show(test.id, query);
+      const treatmentsChildren = testResult.treatmentChildren.filter(a => a.treatment.treatmentAssets.length > 0);
+      const now = moment();
+      const weeks = now.get('weeks');
+      for (let i = 0; i < weeks; i++) {
+        for (const a of treatmentsChildren) {
+          while (now.day() === 0 || now.day() === 6) {
+            now.add(1, 'day');
+          }
+          const r = new TreatmentChildSession();
+          r.treatment = a.treatment;
+          r.test = test;
+          r.dateIni = now.format('YYYY-MM-DD');
+          r.dateEnd = now.format('YYYY-MM-DD');
+          await query.manager.save(TreatmentChildSession, r);
+          now.add(1, 'day');
+        }
+      }
       await query.commitTransaction();
       return {
         message: 'Guardado',
-        testResult: await this.testService.show(test.id, query),
+        testResult,
       };
     } catch (e) {
       // tslint:disable-next-line:no-console

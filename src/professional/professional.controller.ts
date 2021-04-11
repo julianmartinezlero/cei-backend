@@ -1,12 +1,11 @@
 import {Body, Controller, Delete, Get, HttpException, Param, Post, Put, UseGuards} from '@nestjs/common';
-import { Professional } from '../entity/professional.entity';
-import { Crud } from '../interfaces/crud';
-import { ProfessionalService } from './professional.service';
-import { UsersService } from '../users/users.service';
-import { AuthGuard } from '@nestjs/passport';
+import {Professional} from '../entity/professional.entity';
+import {Crud} from '../interfaces/crud';
+import {ProfessionalService} from './professional.service';
+import {UsersService} from '../users/users.service';
+import {AuthGuard} from '@nestjs/passport';
 import {getConnection} from 'typeorm';
 import {User} from '../entity/user.entity';
-import {ancestorWhere} from 'tslint';
 
 @Controller('professional')
 export class ProfessionalController implements Crud {

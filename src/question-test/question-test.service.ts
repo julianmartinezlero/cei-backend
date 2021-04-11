@@ -43,10 +43,11 @@ export class QuestionTestService implements Crud {
       q = query.manager.getRepository(Test).createQueryBuilder('test');
     }
 
-    q.innerJoinAndSelect('test.child', 'child')
-    .innerJoinAndSelect('test.professional', 'professional')
-    .innerJoinAndSelect('test.treatmentChildren', 'treatmentChildren')
-    .innerJoinAndSelect('treatmentChildren.treatment', 'treatment')
+    q.leftJoinAndSelect('test.child', 'child')
+    .leftJoinAndSelect('test.professional', 'professional')
+    .leftJoinAndSelect('test.treatmentChildren', 'treatmentChildren')
+    .leftJoinAndSelect('treatmentChildren.treatment', 'treatment')
+    .leftJoinAndSelect('treatment.treatmentAssets', 'treatmentAssets')
     .where('test.id = :a', {a: id});
       // .andWhere('professional.deleteAt IS NULL')
     return q.getOne();
@@ -69,9 +70,10 @@ export class QuestionTestService implements Crud {
 
   async testChild(childId: any) {
     return this.testRepository.createQueryBuilder('test')
-      .innerJoinAndSelect('test.treatmentChildren', 'treatmentChildren')
-      .innerJoinAndSelect('treatmentChildren.treatment', 'treatment')
-      .innerJoinAndSelect('test.child', 'child')
+      .leftJoinAndSelect('test.treatmentChildren', 'treatmentChildren')
+      .leftJoinAndSelect('treatmentChildren.treatment', 'treatment')
+      .leftJoinAndSelect('treatment.treatmentAssets', 'treatmentAssets')
+      .leftJoinAndSelect('test.child', 'child')
       .where('child.id = :id', {id: childId})
       .getMany();
   }

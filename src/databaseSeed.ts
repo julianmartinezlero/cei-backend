@@ -5,6 +5,7 @@ import {TreatmentSeed} from './seeds/seed/treatment.seed';
 import {UserSeed} from './seeds/seed/users.seed';
 import {QuestionAssetSeed} from './seeds/seed/questionAsset.seed';
 import {ProfessionalSeed} from './seeds/seed/professional.seed';
+import {TreatmentAssetSeed} from './seeds/seed/treatmentAsset.seed';
 
 async function bootstrap() {
   await seeding();
@@ -16,6 +17,7 @@ async function seeding() {
     QuestionOptionsSeed,
     QuestionAssetSeed,
     TreatmentSeed,
+    TreatmentAssetSeed,
     UserSeed,
     ProfessionalSeed,
   ];
