@@ -9,7 +9,7 @@ export class TreatmentService {
   constructor(
     @InjectRepository(Treatment)
     private readonly treatment: Repository<Treatment>,
-    @InjectRepository(TreatmentChildSession) private readonly treatmentChildSession: Repository<TreatmentChildSession>
+    @InjectRepository(TreatmentChildSession) private readonly treatmentChildSession: Repository<TreatmentChildSession>,
   ) {
   }
 

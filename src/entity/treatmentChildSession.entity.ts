@@ -16,6 +16,9 @@ export class TreatmentChildSession {
   @Column({ type: 'date' })
   dateEnd: string;
 
+  @Column({ type: 'varchar', length: 50, default: 'purple-event' })
+  classColor: string;
+
   @ManyToOne(() => Treatment, treatment => treatment.treatmentChildSessions)
   @JoinColumn()
   treatment: Treatment;
