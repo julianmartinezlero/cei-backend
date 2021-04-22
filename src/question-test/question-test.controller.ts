@@ -78,10 +78,11 @@ export class QuestionTestController {
       await this.createTreatment(test, query);
       testResult = await this.testService.show(test.id, query);
       const treatmentsChildren = testResult.treatmentChildren.filter(a => a.treatment.treatmentAssets.length > 0);
+      const treatmentsSession = testResult.treatmentChildren.find(a => a.treatment.treatmentAssets.length === 0);
       const now = moment();
       const colors = ['blue-event', 'purple-event', 'cyan-event', 'green-event', 'orange-event'];
       const weeks = now.get('weeks');
-      for (let i = 0; i < weeks; i++) {
+      for (let i = 0; i < treatmentsSession.treatment.week; i++) {
         for (let index = 0; index < treatmentsChildren.length; index ++) {
           while (now.day() === 0 || now.day() === 6) {
             now.add(1, 'day');

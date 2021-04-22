@@ -6,7 +6,7 @@ export const TREATMENT_DATA: Treatment[] = [
     range: 0,
     text: 'Usted no presenta riesgo',
     sessions: null,
-    week: 0,
+    week: 4,
     month: null,
   },
   {
@@ -16,7 +16,7 @@ export const TREATMENT_DATA: Treatment[] = [
       'unas serie de ejercicios para reforzar su desarrollo y de esa forma no ' +
       'presentar ningún riesgo',
     sessions: null,
-    week: 0,
+    week: 8,
     month: null,
   },
   {
@@ -26,7 +26,7 @@ export const TREATMENT_DATA: Treatment[] = [
       'realizar unas serie de ejercicios para reforzar su desarrollo y ' +
       'de esa forma no presentar ningún riesgo',
     sessions: null,
-    week: 0,
+    week: 12,
     month: null,
   },
   {
@@ -36,7 +36,7 @@ export const TREATMENT_DATA: Treatment[] = [
       'realizar unas serie de ejercicios para reforzar su desarrollo ' +
       'y de esa forma no presentar ningún riesgo',
     sessions: null,
-    week: 0,
+    week: 16,
     month: null,
   },
 
