@@ -4,7 +4,7 @@ import {QuestionAsset} from '../../entity/questionAsset.entity';
 export const QUESTIONS_ASSETS_DATA: QuestionAsset[] = [
   {
     id: 1,
-    asset: '/assets/12-3/dado.png',
+    asset: 'img_dado.png',
     assetType: '.png',
     question: {id: 3} as Question,
     createdAt: new Date(),
@@ -12,7 +12,7 @@ export const QUESTIONS_ASSETS_DATA: QuestionAsset[] = [
   },
   {
     id: 2,
-    asset: '/assets/12-3/goma.png',
+    asset: 'img_goma.png',
     assetType: '.png',
     question: {id: 3} as Question,
     createdAt: new Date(),
@@ -20,7 +20,7 @@ export const QUESTIONS_ASSETS_DATA: QuestionAsset[] = [
   },
   {
     id: 3,
-    asset: '/assets/12-3/pato.png',
+    asset: 'img_pato.png',
     assetType: '.png',
     question: {id: 3} as Question,
     createdAt: new Date(),
@@ -28,7 +28,7 @@ export const QUESTIONS_ASSETS_DATA: QuestionAsset[] = [
   },
   {
     id: 4,
-    asset: '/assets/12-3/pelo.png',
+    asset: 'img_pelo.png',
     assetType: '.png',
     question: {id: 3} as Question,
     createdAt: new Date(),
@@ -36,7 +36,7 @@ export const QUESTIONS_ASSETS_DATA: QuestionAsset[] = [
   },
   {
     id: 5,
-    asset: '/assets/12-3/taza.png',
+    asset: 'img_taza.png',
     assetType: '.png',
     question: {id: 3} as Question,
     createdAt: new Date(),
@@ -44,7 +44,7 @@ export const QUESTIONS_ASSETS_DATA: QuestionAsset[] = [
   },
   {
     id: 6,
-    asset: '/assets/5/5.png',
+    asset: 'img_5.png',
     assetType: '.png',
     question: {id: 5} as Question,
     createdAt: new Date(),
@@ -52,7 +52,7 @@ export const QUESTIONS_ASSETS_DATA: QuestionAsset[] = [
   },
   {
     id: 7,
-    asset: '/assets/8/8.png',
+    asset: 'img_8.png',
     assetType: '.png',
     question: {id: 8} as Question,
     createdAt: new Date(),
@@ -60,7 +60,7 @@ export const QUESTIONS_ASSETS_DATA: QuestionAsset[] = [
   },
   {
     id: 8,
-    asset: '/assets/9/9.png',
+    asset: 'img_9.png',
     assetType: '.png',
     question: {id: 9} as Question,
     createdAt: new Date(),
@@ -68,7 +68,7 @@ export const QUESTIONS_ASSETS_DATA: QuestionAsset[] = [
   },
   {
     id: 9,
-    asset: '/assets/10/10_1.png',
+    asset: 'img_10_1.png',
     assetType: '.png',
     question: {id: 10} as Question,
     createdAt: new Date(),
@@ -76,7 +76,7 @@ export const QUESTIONS_ASSETS_DATA: QuestionAsset[] = [
   },
   {
     id: 10,
-    asset: '/assets/10/10_2.png',
+    asset: 'img_10_2.png',
     assetType: '.png',
     question: {id: 10} as Question,
     createdAt: new Date(),
@@ -84,7 +84,7 @@ export const QUESTIONS_ASSETS_DATA: QuestionAsset[] = [
   },
   {
     id: 11,
-    asset: '/assets/11/1.png',
+    asset: 'img_11_1.png',
     assetType: '.png',
     question: {id: 11} as Question,
     createdAt: new Date(),
@@ -92,7 +92,7 @@ export const QUESTIONS_ASSETS_DATA: QuestionAsset[] = [
   },
   {
     id: 12,
-    asset: '/assets/11/2.png',
+    asset: 'img_11_2.png',
     assetType: '.png',
     question: {id: 11} as Question,
     createdAt: new Date(),
@@ -100,21 +100,21 @@ export const QUESTIONS_ASSETS_DATA: QuestionAsset[] = [
   },
   {
     id: 13,
-    asset: '/assets/11/3.png',
+    asset: 'img_11_3.png',
     assetType: '.png',
     question: {id: 11} as Question,
     createdAt: new Date(),
     updatedAt: new  Date(),
   },  {
     id: 14,
-    asset: '/assets/11/4.png',
+    asset: 'img_11_4.png',
     assetType: '.png',
     question: {id: 11} as Question,
     createdAt: new Date(),
     updatedAt: new  Date(),
   },  {
     id: 15,
-    asset: '/assets/11/5.png',
+    asset: 'img_11_5.png',
     assetType: '.png',
     question: {id: 11} as Question,
     createdAt: new Date(),
@@ -122,7 +122,7 @@ export const QUESTIONS_ASSETS_DATA: QuestionAsset[] = [
   },
   {
     id: 16,
-    asset: '/assets/12-3/dado.png',
+    asset: 'img_dado.png',
     assetType: '.png',
     question: {id: 12} as Question,
     createdAt: new Date(),
@@ -130,7 +130,7 @@ export const QUESTIONS_ASSETS_DATA: QuestionAsset[] = [
   },
   {
     id: 17,
-    asset: '/assets/12-3/goma.png',
+    asset: 'img_goma.png',
     assetType: '.png',
     question: {id: 12} as Question,
     createdAt: new Date(),
@@ -138,7 +138,7 @@ export const QUESTIONS_ASSETS_DATA: QuestionAsset[] = [
   },
   {
     id: 18,
-    asset: '/assets/12-3/pato.png',
+    asset: 'img_pato.png',
     assetType: '.png',
     question: {id: 12} as Question,
     createdAt: new Date(),
@@ -146,7 +146,7 @@ export const QUESTIONS_ASSETS_DATA: QuestionAsset[] = [
   },
   {
     id: 19,
-    asset: '/assets/12-3/pelo.png',
+    asset: 'img_pelo.png',
     assetType: '.png',
     question: {id: 12} as Question,
     createdAt: new Date(),
@@ -154,7 +154,7 @@ export const QUESTIONS_ASSETS_DATA: QuestionAsset[] = [
   },
   {
     id: 20,
-    asset: '/assets/12-3/taza.png',
+    asset: 'img_taza.png',
     assetType: '.png',
     question: {id: 12} as Question,
     createdAt: new Date(),

@@ -4,11 +4,13 @@ import { Test } from '../entity/test.entity';
 import {getConnection, QueryRunner, Repository} from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Question } from '../entity/question.entity';
+import {QuestionAsset} from '../entity/questionAsset.entity';
 
 @Injectable()
 export class QuestionTestService implements Crud {
   constructor(@InjectRepository(Test) private testRepository: Repository<Test>,
-              @InjectRepository(Question) private questionRepository: Repository<Question>) {
+              @InjectRepository(Question) private questionRepository: Repository<Question>,
+              @InjectRepository(QuestionAsset) private assetRepository: Repository<QuestionAsset>) {
   }
 
   async all(): Promise<Test[]> {
@@ -77,5 +79,13 @@ export class QuestionTestService implements Crud {
       .where('child.id = :id', {id: childId})
       .orderBy('test.createdAt', 'DESC')
       .getMany();
+  }
+
+  createAssets(asset: QuestionAsset) {
+    return this.assetRepository.save(asset);
+  }
+
+  deleteAsset(id: any) {
+    return this.assetRepository.delete(id);
   }
 }

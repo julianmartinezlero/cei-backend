@@ -1,11 +1,26 @@
-import {Body, Controller, Delete, Get, HttpException, Param, Post, Req, Request, UseGuards} from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  Param,
+  Post,
+  Query,
+  Req,
+  Request,
+  Res,
+  UploadedFiles,
+  UseGuards,
+  UseInterceptors
+} from '@nestjs/common';
 import {QuestionTestService} from './question-test.service';
 import {Test} from '../entity/test.entity';
 import {AuthGuard} from '@nestjs/passport';
 import {UsersService} from '../users/users.service';
 import {ChildService} from '../child/child.service';
 import {QuestionTestSolvedService} from './question-test-solved.service';
-import {randomId} from '../utils/utils';
+import {editFileName, randomId} from '../utils/utils';
 import {getConnection, QueryRunner} from 'typeorm';
 import {TestQuestionOption} from '../entity/testQuestionOption.entity';
 import {ProfessionalService} from '../professional/professional.service';
@@ -13,6 +28,12 @@ import {TreatmentService} from '../treatment/treatment.service';
 import {TreatmentChild} from '../entity/treatmentChild.entity';
 import {TreatmentChildSession} from '../entity/treatmentChildSession.entity';
 import * as moment from 'moment';
+// import {editFileName} from '';
+import {diskStorage} from 'multer';
+import * as path from 'path';
+import {FileFieldsInterceptor} from '@nestjs/platform-express';
+import {QuestionAsset} from '../entity/questionAsset.entity';
+import {Question} from '../entity/question.entity';
 
 @Controller('question-test')
 export class QuestionTestController {
@@ -46,6 +67,44 @@ export class QuestionTestController {
   @Get(':id/solved')
   forSolved(@Param() params, @Request() req) {
     return this.testService.getQuestions();
+  }
+
+  @Get('resources/assets/:file')
+  async getRenderTransactionFile(@Param() params, @Res() res) {
+    const dirname =  path.normalize(__dirname  + '/../../assets/');
+    return res.sendFile(params.file, { root: dirname });
+  }
+
+  @Post('uploadAsset/:id')
+  @UseInterceptors(FileFieldsInterceptor([
+    { name: 'file', maxCount: 1 },
+  ], {
+    storage: diskStorage({
+      destination: 'assets',
+      filename: editFileName,
+    }),
+  }))
+  async saveFile(@Body() body, @Param() params,  @Request() req, @UploadedFiles() files) {
+    const asset = new QuestionAsset();
+    asset.asset = files.file[0].filename;
+    asset.assetType = asset.asset.split('.')[asset.asset.split('.').length - 1];
+    asset.question = {id: params.id} as Question;
+    return this.testService.createAssets(asset).then(a => {
+        return {
+          message: 'Subido',
+          data: asset,
+        };
+    });
+  }
+
+  @Delete('deleteAsset/:id')
+  async deleteAsset(@Param() params) {
+    return this.testService.deleteAsset(params.id).then(a => {
+      return {
+        message: 'Eliminado',
+        code: 200,
+      };
+    });
   }
 
   @UseGuards(AuthGuard('jwt'))
