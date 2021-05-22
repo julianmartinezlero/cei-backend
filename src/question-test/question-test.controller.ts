@@ -12,8 +12,7 @@ import {
   Res,
   UploadedFiles,
   UseGuards,
-  UseInterceptors
-} from '@nestjs/common';
+  UseInterceptors} from '@nestjs/common';
 import {QuestionTestService} from './question-test.service';
 import {Test} from '../entity/test.entity';
 import {AuthGuard} from '@nestjs/passport';
@@ -34,6 +33,7 @@ import * as path from 'path';
 import {FileFieldsInterceptor} from '@nestjs/platform-express';
 import {QuestionAsset} from '../entity/questionAsset.entity';
 import {Question} from '../entity/question.entity';
+// import {FileFieldsInterceptor} from '@nestjs/platform-express';
 
 @Controller('question-test')
 export class QuestionTestController {
@@ -67,6 +67,26 @@ export class QuestionTestController {
   @Get(':id/solved')
   forSolved(@Param() params, @Request() req) {
     return this.testService.getQuestions();
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('update/solved')
+  async updateQuestions(@Param() params, @Body() body) {
+    const query = getConnection().createQueryRunner();
+    await query.startTransaction();
+    try {
+      for (const question of body) {
+        await this.testService.updateQuestion(question.questionId, question.questionId.questionOptions, query);
+      }
+      await query.commitTransaction();
+      return {
+        message: 'Guardado',
+      };
+    } catch (e) {
+      // tslint:disable-next-line:no-console
+      console.log(e);
+      await query.rollbackTransaction();
+    }
   }
 
   @Get('resources/assets/:file')

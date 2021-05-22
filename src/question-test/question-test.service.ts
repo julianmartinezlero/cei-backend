@@ -5,28 +5,17 @@ import {getConnection, QueryRunner, Repository} from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Question } from '../entity/question.entity';
 import {QuestionAsset} from '../entity/questionAsset.entity';
+import {QuestionOption} from '../entity/questionOption.entity';
 
 @Injectable()
 export class QuestionTestService implements Crud {
   constructor(@InjectRepository(Test) private testRepository: Repository<Test>,
               @InjectRepository(Question) private questionRepository: Repository<Question>,
+              @InjectRepository(QuestionOption) private questionOptionRepository: Repository<QuestionOption>,
               @InjectRepository(QuestionAsset) private assetRepository: Repository<QuestionAsset>) {
   }
 
   async all(): Promise<Test[]> {
-    // return await this.testRepository.query(
-    //   'SELECT\n' +
-    //   'test.id,\n' +
-    //   'test.code,\n' +
-    //   'test.questionState,\n' +
-    //   'CONCAT(child.name, CONCAT(\' \',child.lastName)) AS name,\n' +
-    //   'CONCAT(professional.name, CONCAT(\' \',professional.lastName)) AS professional,\n' +
-    //   'test.childId,\n' +
-    //   'test.professionalId,\n' +
-    //   'test.createdAt,\n' +
-    //   'test.updatedAt\n' +
-    //   'FROM test JOIN child ON test.childId=child.id\n' +
-    //   'LEFT JOIN professional ON professional.id = test.professionalId');
     return this.testRepository.createQueryBuilder('t')
       .innerJoinAndSelect('t.professional', 'professional')
       .innerJoinAndSelect('t.child', 'child')
@@ -67,6 +56,7 @@ export class QuestionTestService implements Crud {
     return await this.questionRepository.createQueryBuilder('question')
       .leftJoinAndSelect('question.questionOptions', 'options')
       .leftJoinAndSelect('question.questionAssets', 'assets')
+      .orderBy('question.id', 'ASC')
       .getMany();
   }
 
@@ -88,4 +78,17 @@ export class QuestionTestService implements Crud {
   deleteAsset(id: any) {
     return this.assetRepository.delete(id);
   }
+
+  async updateQuestion(question: Question, options: any[], query: QueryRunner) {
+    const qu = await this.questionRepository.createQueryBuilder().where('id = :i', {i: question.id}).getOne();
+    qu.question = question.question;
+    qu.details = question.details;
+    for (const option of options) {
+      const q = await this.questionOptionRepository.createQueryBuilder().where('id = :i', {i: option.id}).getOne();
+      q.description = option.description;
+      await query.manager.save(QuestionOption, q);
+    }
+    await query.manager.save(Question, qu);
+  }
+
 }

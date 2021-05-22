@@ -14,7 +14,10 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   @Post('login')
   async login(@Request() req) {
-    return this.authService.login(req.user);
+    return this.authService.login(req.user).then(a => {
+      console.log(a);
+      return a;
+    });
   }
 
   // @UseGuards(AuthGuard('local'))
@@ -31,9 +34,9 @@ export class AuthController {
     try {
       const user = {
         id: null,
-        email: professional.email,
+        email: professional.cell,
         username: professional.name + professional.lastName,
-        password: professional.password,
+        password: professional.ci,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
