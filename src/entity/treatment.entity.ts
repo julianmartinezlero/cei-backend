@@ -2,6 +2,7 @@ import {Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn} from 'typ
 import {TreatmentChild} from './treatmentChild.entity';
 import {TreatmentAsset} from './treatmentAsset.entity';
 import {TreatmentChildSession} from './treatmentChildSession.entity';
+import {tryCatch} from 'rxjs/internal-compatibility';
 
 @Entity()
 export class Treatment {
@@ -14,13 +15,13 @@ export class Treatment {
   @Column({ type: 'longtext' })
   text;
 
-  @Column({ type: 'int', default: 0 })
+  @Column({ type: 'int', default: 0, nullable: true })
   sessions: number;
 
-  @Column({ type: 'int', default: 0 })
+  @Column({ type: 'int', default: 0, nullable: true })
   week: number;
 
-  @Column({ type: 'int', default: 0 })
+  @Column({ type: 'int', default: 0, nullable: true })
   month: number;
 
   @OneToMany(type => TreatmentChild, treatmentChild => treatmentChild.treatment)

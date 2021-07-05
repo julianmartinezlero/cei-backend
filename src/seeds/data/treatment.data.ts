@@ -43,9 +43,11 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 5,
     range: 0,
-    text: 'Se recomienda realizar ejercicios de escritura ' +
-      'dos veces por semana durante un mes ' +
-      '(dictado, escribir su nombre 10 veces, etc.)',
+    text: `
+        -Realizar dictado con el material facilitado.
+        -Escribe tu nombre 10 veces.
+        -Práctica la forma correcta del alfabeto.
+        -Otros ejercicios.`,
     sessions: 2,
     week: 1,
     month: 1,
@@ -53,8 +55,11 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 6,
     range: 1,
-    text: 'Se recomienda realizar ejercicios de escritura una vez por semana (dictado, escribir su nombre 10,etc.)\n' +
-      ' (10 sesiones, un mes)',
+    text: `
+        -Realizar dictado con el material facilitado.
+        -Escribe tu nombre 10 veces.
+        -Práctica la forma correcta del alfabeto.
+        -Otros ejercicios.`,
     sessions: 10,
     week: 1,
     month: 1,
@@ -62,8 +67,11 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 7,
     range: 2,
-    text: 'Se recomienda realizar ejercicios de escritura una vez por semana (dictado, escribir su nombre 10 veces para) \n' +
-      '(20 sesiones, dos meses)',
+    text: `
+        -Realizar dictado con el material facilitado.
+        -Escribe tu nombre 10 veces.
+        -Práctica la forma correcta del alfabeto.
+        -Otros ejercicios.`,
     sessions: 20,
     week: 1,
     month: 2,
@@ -71,8 +79,11 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 8,
     range: 3,
-    text: 'Se recomienda realizar ejercicios de escritura una vez por semana (dictado, escribir su nombre 10 veces para) \n' +
-      '(30 sesiones, tres meses)',
+    text: `
+        -Realizar dictado con el material facilitado.
+        -Escribe tu nombre 10 veces.
+        -Práctica la forma correcta del alfabeto.
+        -Otros ejercicios.`,
     sessions: 30,
     week: 1,
     month: 3,
@@ -80,8 +91,10 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 9,
     range: 0,
-    text: 'Se recomienda realizar la escritura de los números del ' +
-      '1 al 10 progresivamente y otros ejercicios matemáticos, cada semana durante un mes.',
+    text: `
+    -Realiza la escritura de los números.
+    - Realiza los ejercicios propuestos en el sistema.
+`,
     sessions: 1,
     week: 1,
     month: 1,
@@ -89,9 +102,10 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 10,
     range: 1,
-    text: 'Se recomienda realizar la escritura de los números del 1' +
-      ' al 10 progresivamente y otros ejercicios matemáticos, ' +
-      'cada semana durante un mes. (10 sesiones, un mes)',
+    text: `
+    -Realiza la escritura de los números.
+    - Realiza los ejercicios propuestos en el sistema.
+`,
     sessions: 10,
     week: 1,
     month: 1,
@@ -99,9 +113,10 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 11,
     range: 2,
-    text: 'Se recomienda realizar la escritura de los números ' +
-      'del 1 al 10 progresivamente y otros ejercicios matemáticos, ' +
-      'cada semana durante un mes. (20 sesiones, dos meses)',
+    text: `
+    -Realiza la escritura de los números.
+    - Realiza los ejercicios propuestos en el sistema.
+`,
     sessions: 20,
     week: 1,
     month: 2,
@@ -109,8 +124,10 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 12,
     range: 3,
-    text: 'Se recomienda realizar la escritura de los números del 1 al 10 progresivamente y' +
-      ' otros ejercicios matemáticos, cada semana durante un mes. (30 sesiones, tres meses)',
+    text: `
+    -Realiza la escritura de los números.
+    - Realiza los ejercicios propuestos en el sistema.
+`,
     sessions: 30,
     week: 1,
     month: 3,
@@ -118,7 +135,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 13,
     range: 0,
-    text: 'Se recomienda realizar ejercicios de lectura a través de cartillas',
+    text: `-Práctica lectura a través de las cartillas y libros.`,
     sessions: 0,
     week: 0,
     month: 0,
@@ -126,8 +143,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 14,
     range: 1,
-    text: 'Se recomienda realizar ejercicios de lectura a través de cartillas' +
-      ' (10 sesiones, un mes)',
+    text: `-Práctica lectura a través de las cartillas y libros.`,
     sessions: 10,
     week: 1,
     month: 1,
@@ -135,8 +151,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 15,
     range: 2,
-    text: ' Se recomienda realizar ejercicios de lectura a través de cartillas ' +
-      '(20 sesiones, dos meses)',
+    text: `-Práctica lectura a través de las cartillas y libros.`,
     sessions: 20,
     week: 1,
     month: 2,
@@ -144,8 +159,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 16,
     range: 3,
-    text: 'Se recomienda realizar ejercicios de lectura a través de cartillas ' +
-      '(30 sesiones, tres meses)',
+    text: `-Práctica lectura a través de las cartillas y libros.`,
     sessions: 30,
     week: 2,
     month: 3,
@@ -153,7 +167,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 17,
     range: 0,
-    text: 'Se recomienda realizar trabajos mediante ejercicios de motricidad.  (caligrafía).',
+    text: `-Práctica en los cuadernillos de motricidad y trazos.`,
     sessions: 0,
     week: 0,
     month: 0,
@@ -161,8 +175,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 18,
     range: 1,
-    text: ' Se recomienda realizar trabajos mediante ejercicios de motricidad.  (caligrafía)' +
-      ' (10 sesiones, un mes)',
+    text: `-Práctica en los cuadernillos de motricidad y trazos.`,
     sessions: 10,
     week: 1,
     month: 1,
@@ -170,8 +183,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 19,
     range: 2,
-    text: ' Se recomienda realizar trabajos mediante ejercicios de motricidad.  (caligrafía) ' +
-      '(20 sesiones, dos mes)',
+    text: `-Práctica en los cuadernillos de motricidad y trazos.`,
     sessions: 20,
     week: 1,
     month: 2,
@@ -179,8 +191,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 20,
     range: 3,
-    text: ' Se recomienda realizar trabajos mediante ejercicios de motricidad.  (caligrafía) ' +
-      '(30 sesiones, tres)',
+    text: `-Práctica en los cuadernillos de motricidad y trazos.`,
     sessions: 30,
     week: 1,
     month: 3,
@@ -188,9 +199,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 21,
     range: 0,
-    text: 'Se recomienda realizar ejercicios de reconocimiento de imágenes y palabras a través de distintas tareas y cartillas.\n' +
-      '¿Qué es?\n' +
-      '¿Qué  ves?\n',
+    text: `-Práctica a través de los cuadernillos de Razonamiento Verbal.`,
     sessions: 0,
     week: 0,
     month: 0,
@@ -198,10 +207,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 22,
     range: 1,
-    text: 'Se recomienda realizar ejercicios de reconocimiento de imágenes y palabras a través de distintas tareas y cartillas.\n' +
-      '¿Qué es?\n' +
-      '¿Qué ves?\n' +
-      '(10 sesiones, un mes)',
+    text: `-Práctica a través de los cuadernillos de Razonamiento Verbal.`,
     sessions: 10,
     week: 1,
     month: 1,
@@ -209,10 +215,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 23,
     range: 2,
-    text: 'Se recomienda realizar ejercicios de reconocimiento de imágenes y palabras a través de distintas tareas y cartillas.\n' +
-      '¿Qué es?\n' +
-      '¿Qué ves?\n' +
-      '(20 sesiones, dos meses)\n',
+    text: `-Práctica a través de los cuadernillos de Razonamiento Verbal.`,
     sessions: 20,
     week: 1,
     month: 2,
@@ -220,10 +223,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 24,
     range: 3,
-    text: ' Se recomienda realizar ejercicios de reconocimiento de imágenes y palabras a través de distintas tareas y cartillas.\n' +
-      '¿Qué es?\n' +
-      '¿Qué ves?\n' +
-      '(30 sesiones, tres semanas)\n',
+    text: `-Práctica a través de los cuadernillos de Razonamiento Verbal.`,
     sessions: 30,
     week: 1,
     month: 3,

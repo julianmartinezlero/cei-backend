@@ -36,6 +36,7 @@ export class TutorController implements Crud {
     try {
       const user = new User();
       user.email = body.email;
+      user.username = body.name + body.lastName,
       user.password = body.password;
 
       const tutor = new Professional();
