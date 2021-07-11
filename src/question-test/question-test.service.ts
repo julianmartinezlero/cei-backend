@@ -63,6 +63,7 @@ export class QuestionTestService implements Crud {
   async testChild(childId: any) {
     return this.testRepository.createQueryBuilder('test')
       .leftJoinAndSelect('test.treatmentChildren', 'treatmentChildren')
+      .leftJoinAndSelect('test.professional', 'professional')
       .leftJoinAndSelect('treatmentChildren.treatment', 'treatment')
       .leftJoinAndSelect('treatment.treatmentAssets', 'treatmentAssets')
       .leftJoinAndSelect('test.child', 'child')

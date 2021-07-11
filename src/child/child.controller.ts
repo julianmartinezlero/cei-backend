@@ -66,6 +66,7 @@ export class ChildController implements Crud {
       name: child.name,
       lastName: child.lastName,
       ci: child.ci,
+      isActive: child.isActive,
       // birthDate: child.birthDate,
       // sex: child.sex,
       updatedAt: new Date(),

@@ -25,6 +25,9 @@ export class Child {
   @Column({ nullable: true, type: 'longtext' })
   photo: any;
 
+  @Column({ nullable: false, default: true, type: 'boolean' })
+  isActive: boolean;
+
   @ManyToOne(type => Professional, tutor => tutor.children, { nullable: false })
   @JoinColumn()
   professional: Professional;
