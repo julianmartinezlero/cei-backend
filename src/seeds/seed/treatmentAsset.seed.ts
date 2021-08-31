@@ -13,9 +13,11 @@ export class TreatmentAssetSeed extends Seed {
         .into(TreatmentAsset)
         .values(TREATMENT_ASSETS_DATA)
         .execute();
-      log(`success ${this.name} seed \n`);
+      // tslint:disable-next-line:no-console
+      console.log(`success ${this.name} seed \n`);
     } catch (e) {
-      error(e);
+      // tslint:disable-next-line:no-console
+      console.log(e);
     }
   }
 }
