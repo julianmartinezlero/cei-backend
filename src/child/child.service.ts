@@ -3,6 +3,11 @@ import { Crud } from '../interfaces/crud';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Child } from '../entity/child.entity';
+import {
+  paginate,
+  Pagination,
+  IPaginationOptions,
+} from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class ChildService implements Crud {
@@ -12,12 +17,14 @@ export class ChildService implements Crud {
   ) {
   }
 
-  async all(): Promise<Child[]> {
+  async all(options?: IPaginationOptions): Promise<Child[]> {
     // return await this.tutorRepository.createQueryBuilder().getMany();
-    return this.childRepository.createQueryBuilder('child')
+    const query = this.childRepository.createQueryBuilder('child')
       .leftJoinAndSelect('child.professional', 'professional')
-      .where('professional.deleteAt IS NULL')
-      .getMany();
+      .where('professional.deleteAt IS NULL');
+      // .getMany();
+    return query.getMany();
+    // return paginate<Child>(query, options);
   }
 
   async create(child: Child | Child[]): Promise<any> {
@@ -54,5 +61,20 @@ export class ChildService implements Crud {
     return await this.childRepository.createQueryBuilder('p')
       .where('p.ci = :ci', {ci})
       .getOne();
+  }
+
+  findInPeriodTreatment(dateIni, dateEnd) {
+    const query = this.childRepository.createQueryBuilder('child')
+        .leftJoinAndSelect('child.professional', 'professional')
+        .leftJoinAndSelect('child.tests', 'tests')
+        .where('professional.deleteAt IS NULL')
+        .andWhere('tests.createdAt >= :ini')
+        .andWhere('tests.createdAt <= :end')
+        .setParameters({
+          ini: dateIni,
+          end: dateEnd,
+        });
+    // .getMany();
+    return query.getMany();
   }
 }

@@ -30,6 +30,7 @@
     "file-base64": "^1.0.0",
     "moment": "^2.29.1",
     "mysql": "^2.17.1",
+    "nestjs-typeorm-paginate": "^2.6.2",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",

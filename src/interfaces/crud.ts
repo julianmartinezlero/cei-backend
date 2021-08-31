@@ -1,5 +1,5 @@
 export interface Crud {
-  all();
+  all(...options);
   create(value: any, param?: any);
   show(id: any);
   update(id: any, value: any);

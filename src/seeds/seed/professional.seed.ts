@@ -1,4 +1,3 @@
-import {error, log} from 'util';
 import {Seed} from '../seed';
 import {Professional} from '../../entity/professional.entity';
 import {PROFESSIONAL} from '../data/professional.data';

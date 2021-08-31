@@ -1,5 +1,4 @@
 import {Seed} from '../seed';
-import {error, log} from 'util';
 import {Treatment} from '../../entity/treatment.entity';
 import {TREATMENT_DATA} from '../data/treatment.data';
 

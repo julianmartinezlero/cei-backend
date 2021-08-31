@@ -1,5 +1,4 @@
 import {Question} from '../../entity/question.entity';
-import {error, log} from 'util';
 import {QUESTIONS_DATA} from '../data/question.data';
 import {Seed} from '../seed';
 

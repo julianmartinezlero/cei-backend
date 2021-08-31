@@ -67,7 +67,8 @@ export class QuestionTestService implements Crud {
       .leftJoinAndSelect('treatmentChildren.treatment', 'treatment')
       .leftJoinAndSelect('treatment.treatmentAssets', 'treatmentAssets')
       .leftJoinAndSelect('test.child', 'child')
-      .where('child.id = :id', {id: childId})
+        .leftJoinAndSelect('child.professional', 'tutor')
+        .where('child.id = :id', {id: childId})
       .orderBy('test.createdAt', 'DESC')
       .getMany();
   }

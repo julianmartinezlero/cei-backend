@@ -1,11 +1,10 @@
-import {Body, Controller, Delete, Get, Param, Request, Post, Put, UseGuards, Req, HttpException} from '@nestjs/common';
-import { Crud } from '../interfaces/crud';
-import { Child } from '../entity/child.entity';
-import { ChildService } from './child.service';
-import { AuthGuard } from '@nestjs/passport';
-import { TutorService } from '../tutor/tutor.service';
+import {Body, Controller, Delete, Get, HttpException, Param, Post, Put, Query, Req, Request, UseGuards} from '@nestjs/common';
+import {Crud} from '../interfaces/crud';
+import {Child} from '../entity/child.entity';
+import {ChildService} from './child.service';
+import {AuthGuard} from '@nestjs/passport';
+import {TutorService} from '../tutor/tutor.service';
 import {UsersService} from '../users/users.service';
-import {ancestorWhere} from 'tslint';
 import {ProfessionalService} from '../professional/professional.service';
 
 @Controller('child')
@@ -18,8 +17,20 @@ export class ChildController implements Crud {
 
   @UseGuards(AuthGuard('jwt'))
   @Get()
-  all(): Promise<Child[]> {
-    return this.childService.all();
+  all(@Param() params): Promise<any> {
+    return this.childService.all(
+        // {
+      // page: params.page ? params.page : 1,
+      // limit: params.limit ? params.limit : 20,
+    // }
+    );
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('inPeriod/solved')
+  getInPeriod(@Query() query) {
+    console.log(query);
+    return this.childService.findInPeriodTreatment(query.dateIni, query.dateEnd);
   }
 
   @UseGuards(AuthGuard('jwt'))
