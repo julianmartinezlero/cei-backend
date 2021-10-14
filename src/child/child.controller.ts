@@ -9,6 +9,34 @@ import {ProfessionalService} from '../professional/professional.service';
 
 @Controller('child')
 export class ChildController implements Crud {
+
+  ranges = [
+      {
+        min: 0,
+        max: 0.69,
+        title: 'Sin Riesgo',
+        children: [],
+      },
+      {
+        min: 0.70,
+        max: 1.19,
+        title: 'Riesgo Leve',
+        children: [],
+      },
+      {
+        min: 1.20,
+        max: 1.70,
+        title: 'Moderado',
+        children: [],
+      },
+      {
+        min: 1.71,
+        max: 3,
+        title: 'Risgo Alto',
+        children: [],
+      },
+    ];
+
   constructor(private readonly childService: ChildService,
               private userService: UsersService,
               private professionalService: ProfessionalService,
@@ -29,7 +57,6 @@ export class ChildController implements Crud {
   @UseGuards(AuthGuard('jwt'))
   @Get('inPeriod/solved')
   getInPeriod(@Query() query) {
-    console.log(query);
     return this.childService.findInPeriodTreatment(query.dateIni, query.dateEnd);
   }
 
@@ -109,5 +136,17 @@ export class ChildController implements Crud {
   async childOfTutor(@Param() params) {
     const tutor = await this.tutorService.findTutorById(params.tutorId);
     return await this.childService.ofTutor(tutor.id);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('classification/children')
+  async childOfClassification() {
+    const a = [];
+    for (const range of this.ranges) {
+      const r = range;
+      r.children = await this.childService.inRange(range.min, range.max);
+      a.push(r);
+    }
+    return a;
   }
 }

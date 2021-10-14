@@ -33,6 +33,7 @@ import * as path from 'path';
 import {FileFieldsInterceptor} from '@nestjs/platform-express';
 import {QuestionAsset} from '../entity/questionAsset.entity';
 import {Question} from '../entity/question.entity';
+import {getRange} from '../common';
 // import {FileFieldsInterceptor} from '@nestjs/platform-express';
 
 @Controller('question-test')
@@ -192,27 +193,12 @@ export class QuestionTestController {
   }
 
   async createTreatment(test: Test, query: QueryRunner) {
-    const treatments = await this.treatmentService.getTreatments(await this.getRange(test.totalValue));
+    const treatments = await this.treatmentService.getTreatments(getRange(test.totalValue));
     for (const treatment of treatments) {
       const t = new TreatmentChild();
       t.treatment = treatment;
       t.test = test;
       await query.manager.save(TreatmentChild, t);
-    }
-  }
-
-  async getRange(total) {
-    if (total >= 0 && total <= 0.69) {
-      return 0;
-    }
-    if (total >= 0.70 && total <= 1.19) {
-      return 1;
-    }
-    if (total >= 1.20 && total <= 1.70) {
-      return 2;
-    }
-    if (total >= 1.71 && total <= 3) {
-      return 3;
     }
   }
 }

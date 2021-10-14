@@ -50,7 +50,6 @@ export class ChildService implements Crud {
   }
 
   async ofTutor(idTutor: number): Promise<any> {
-    console.log(idTutor);
     return await this.childRepository.createQueryBuilder('child')
       .leftJoinAndSelect('child.tests', 'tests')
       .where('child.professional.id = :idT', { idT: idTutor })
@@ -76,5 +75,19 @@ export class ChildService implements Crud {
         });
     // .getMany();
     return query.getMany();
+  }
+
+  async inRange(min: number, max: number): Promise<Child[]> {
+    // return await this.tutorRepository.createQueryBuilder().getMany();
+    const query = this.childRepository.createQueryBuilder('child')
+        .leftJoinAndSelect('child.professional', 'professional')
+        .innerJoin('child.tests', 'test')
+        .where('professional.deleteAt IS NULL')
+        .andWhere('test.totalValue >= :m')
+        .andWhere('test.totalValue <= :n')
+        .setParameters({m: min, n: max});
+    // .getMany();
+    return query.getMany();
+    // return paginate<Child>(query, options);
   }
 }
