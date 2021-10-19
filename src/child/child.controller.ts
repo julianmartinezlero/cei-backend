@@ -142,6 +142,10 @@ export class ChildController implements Crud {
   @Get('classification/children')
   async childOfClassification() {
     const a = [];
+    a.push({
+      title: 'Sin diagnóstico',
+      children: (await this.childService.notTest()).filter(r => r.tests.length === 0),
+    });
     for (const range of this.ranges) {
       const r = range;
       r.children = await this.childService.inRange(range.min, range.max);

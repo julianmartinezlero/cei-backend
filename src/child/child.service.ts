@@ -8,6 +8,7 @@ import {
   Pagination,
   IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
+import {queue} from 'rxjs/internal/scheduler/queue';
 
 @Injectable()
 export class ChildService implements Crud {
@@ -89,5 +90,12 @@ export class ChildService implements Crud {
     // .getMany();
     return query.getMany();
     // return paginate<Child>(query, options);
+  }
+
+  async notTest(): Promise<Child[]> {
+    return this.childRepository.createQueryBuilder('child')
+        .leftJoinAndSelect('child.professional', 'professional')
+        .leftJoinAndSelect('child.tests', 'tests')
+        .getMany();
   }
 }
