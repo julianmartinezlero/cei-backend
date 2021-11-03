@@ -15,6 +15,9 @@ export class Treatment {
   @Column({ type: 'longtext' })
   text;
 
+  @Column({ type: 'longtext' })
+  shortText;
+
   @Column({ type: 'int', default: 0, nullable: true })
   sessions: number;
 

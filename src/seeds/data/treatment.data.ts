@@ -8,6 +8,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: null,
     week: 4,
     month: null,
+    shortText: 'Dictado y Escritura',
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: null,
     week: 8,
     month: null,
+    shortText: 'Matematicas y Motricidad',
   },
   {
     id: 3,
@@ -28,6 +30,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: null,
     week: 12,
     month: null,
+    shortText: 'Lectura',
   },
   {
     id: 4,
@@ -38,6 +41,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: null,
     week: 16,
     month: null,
+    shortText: 'Trazos y Motricidad',
   },
 
   {
@@ -51,6 +55,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 2,
     week: 1,
     month: 1,
+    shortText: 'Dictado y Escritura',
   },
   {
     id: 6,
@@ -63,6 +68,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 10,
     week: 1,
     month: 1,
+    shortText: 'Dictado y Escritura',
   },
   {
     id: 7,
@@ -75,6 +81,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 20,
     week: 1,
     month: 2,
+    shortText: 'Dictado y Escritura',
   },
   {
     id: 8,
@@ -87,7 +94,9 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 30,
     week: 1,
     month: 3,
+    shortText: 'Dictado y Escritura',
   },
+//  Matematicas y motricidad
   {
     id: 9,
     range: 0,
@@ -98,6 +107,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 1,
     week: 1,
     month: 1,
+    shortText: 'Matematicas y Motricidad',
   },
   {
     id: 10,
@@ -109,6 +119,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 10,
     week: 1,
     month: 1,
+    shortText: 'Matematicas y Motricidad',
   },
   {
     id: 11,
@@ -120,6 +131,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 20,
     week: 1,
     month: 2,
+    shortText: 'Matematicas y Motricidad',
   },
   {
     id: 12,
@@ -131,7 +143,9 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 30,
     week: 1,
     month: 3,
+    shortText: 'Matematicas y Motricidad',
   },
+//  lectura
   {
     id: 13,
     range: 0,
@@ -139,6 +153,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 0,
     week: 0,
     month: 0,
+    shortText: 'Lectura',
   },
   {
     id: 14,
@@ -147,6 +162,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 10,
     week: 1,
     month: 1,
+    shortText: 'Lectura',
   },
   {
     id: 15,
@@ -155,6 +171,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 20,
     week: 1,
     month: 2,
+    shortText: 'Lectura',
   },
   {
     id: 16,
@@ -163,7 +180,9 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 30,
     week: 2,
     month: 3,
+    shortText: 'Lectura',
   },
+//  Motricidad
   {
     id: 17,
     range: 0,
@@ -171,6 +190,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 0,
     week: 0,
     month: 0,
+    shortText: 'Trazos y Motricidad',
   },
   {
     id: 18,
@@ -179,6 +199,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 10,
     week: 1,
     month: 1,
+    shortText: 'Trazos y Motricidad',
   },
   {
     id: 19,
@@ -187,6 +208,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 20,
     week: 1,
     month: 2,
+    shortText: 'Trazos y Motricidad',
   },
   {
     id: 20,
@@ -195,7 +217,9 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 30,
     week: 1,
     month: 3,
+    shortText: 'Trazos y Motricidad',
   },
+//  razonamiento verbal
   {
     id: 21,
     range: 0,
@@ -203,6 +227,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 0,
     week: 0,
     month: 0,
+    shortText: 'Razonamiento Verbal',
   },
   {
     id: 22,
@@ -211,6 +236,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 10,
     week: 1,
     month: 1,
+    shortText: 'Razonamiento Verbal',
   },
   {
     id: 23,
@@ -219,6 +245,7 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 20,
     week: 1,
     month: 2,
+    shortText: 'Razonamiento Verbal',
   },
   {
     id: 24,
@@ -227,5 +254,6 @@ export const TREATMENT_DATA: Treatment[] = [
     sessions: 30,
     week: 1,
     month: 3,
+    shortText: 'Razonamiento Verbal',
   },
 ];
