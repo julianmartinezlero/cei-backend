@@ -19,6 +19,9 @@ export class Child {
   @Column({ type: 'varchar', length: 9 })
   sex: string;
 
+  @Column({ type: 'varchar', length: 255, nullable: true   })
+  education: string;
+
   @Column({ length: 10, nullable: false, unique: true })
   ci: string;
 

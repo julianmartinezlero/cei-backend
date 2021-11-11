@@ -85,6 +85,7 @@ export class ChildController implements Crud {
     t.sex = boby.sex;
     t.professional = professional;
     t.photo = boby.photo;
+    t.education = boby.education ? boby.education : null;
     return {
       message: 'Registrado',
       data: await this.childService.create(t),
@@ -105,6 +106,7 @@ export class ChildController implements Crud {
       lastName: child.lastName,
       ci: child.ci,
       isActive: child.isActive,
+      education: child.education,
       // birthDate: child.birthDate,
       // sex: child.sex,
       updatedAt: new Date(),

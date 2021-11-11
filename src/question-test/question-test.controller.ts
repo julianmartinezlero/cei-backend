@@ -6,13 +6,14 @@ import {
   HttpException,
   Param,
   Post,
-  Query,
   Req,
   Request,
   Res,
+  UploadedFile,
   UploadedFiles,
   UseGuards,
-  UseInterceptors} from '@nestjs/common';
+  UseInterceptors,
+} from '@nestjs/common';
 import {QuestionTestService} from './question-test.service';
 import {Test} from '../entity/test.entity';
 import {AuthGuard} from '@nestjs/passport';
@@ -30,10 +31,11 @@ import * as moment from 'moment';
 // import {editFileName} from '';
 import {diskStorage} from 'multer';
 import * as path from 'path';
-import {FileFieldsInterceptor} from '@nestjs/platform-express';
+import {FileFieldsInterceptor, FileInterceptor, FilesInterceptor} from '@nestjs/platform-express';
 import {QuestionAsset} from '../entity/questionAsset.entity';
 import {Question} from '../entity/question.entity';
 import {getRange} from '../common';
+
 // import {FileFieldsInterceptor} from '@nestjs/platform-express';
 
 @Controller('question-test')
@@ -71,8 +73,15 @@ export class QuestionTestController {
   }
 
   @UseGuards(AuthGuard('jwt'))
+  @Get(':id/resolved')
+  resolved(@Param() params) {
+    return this.testService.testResolved(params.id);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @UseInterceptors(FilesInterceptor('files'))
   @Post('update/solved')
-  async updateQuestions(@Param() params, @Body() body) {
+  async updateQuestions(@Param() params, @Body() body, @UploadedFiles() files: Array<undefined|Express.Multer.File>) {
     const query = getConnection().createQueryRunner();
     await query.startTransaction();
     try {
@@ -190,6 +199,26 @@ export class QuestionTestController {
     } finally {
       await query.release();
     }
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('upload/resource')
+  @UseInterceptors(FileInterceptor('file', {
+    storage: diskStorage({
+      destination: 'resources',
+      filename: editFileName,
+    }),
+  }))
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+    return {
+      message: 'Subido',
+      data: file,
+    };
+  }
+
+  @Get('resource/solved/:id')
+  getFileResource(@Param() params, @Res() res) {
+    return res.sendFile(params.id, { root: 'resources' });
   }
 
   async createTreatment(test: Test, query: QueryRunner) {

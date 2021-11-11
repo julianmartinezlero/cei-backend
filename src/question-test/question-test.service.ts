@@ -93,4 +93,12 @@ export class QuestionTestService implements Crud {
     await query.manager.save(Question, qu);
   }
 
+  testResolved(id) {
+    return this.testRepository.createQueryBuilder('test')
+        .leftJoinAndSelect('test.testResults', 'testResults')
+        .leftJoinAndSelect('testResults.question', 'question')
+        .leftJoinAndSelect('testResults.questionOption', 'questionOption')
+        .where('test.id = :id', {id})
+        .getMany();
+  }
 }
