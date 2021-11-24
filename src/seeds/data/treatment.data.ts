@@ -4,7 +4,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 1,
     range: 0,
-    text: 'Usted no presenta riesgo',
+    text: 'Usted NO PRESENTA RIESGO',
     sessions: null,
     week: 4,
     month: null,
@@ -13,9 +13,8 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 2,
     range: 1,
-    text: 'Usted presenta un riesgo leve, por lo cual se recomienda realizar ' +
-      'unas serie de ejercicios para reforzar su desarrollo y de esa forma no ' +
-      'presentar ningún riesgo',
+    // tslint:disable-next-line:max-line-length
+    text: 'Usted presenta un RIESGO LEVE, por lo cual se recomienda realizar unas serie de ejercicios para reforzar su desarrollo y de esa forma no presentar ningún riesgo',
     sessions: null,
     week: 8,
     month: null,
@@ -24,9 +23,8 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 3,
     range: 2,
-    text: 'Usted presenta un riesgo moderado, por lo cual se recomienda ' +
-      'realizar unas serie de ejercicios para reforzar su desarrollo y ' +
-      'de esa forma no presentar ningún riesgo',
+    // tslint:disable-next-line:max-line-length
+    text: 'Usted presenta un RIESGO MODERADO, por lo cual se recomienda realizar unas serie de ejercicios para reforzar su desarrollo y de esa forma no presentar ningún riesgo',
     sessions: null,
     week: 12,
     month: null,
@@ -35,9 +33,8 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 4,
     range: 3,
-    text: 'Usted presenta un riesgo alto, por lo cual se recomienda ' +
-      'realizar unas serie de ejercicios para reforzar su desarrollo ' +
-      'y de esa forma no presentar ningún riesgo',
+    // tslint:disable-next-line:max-line-length
+    text: `Usted presenta un RIESGO ALTO, por lo cual se recomienda realizar unas serie de ejercicios para reforzar su desarrollo y de esa forma no presentar ningún riesgo`,
     sessions: null,
     week: 16,
     month: null,
@@ -47,11 +44,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 5,
     range: 0,
-    text: `
-        -Realizar dictado con el material facilitado.
-        -Escribe tu nombre 10 veces.
-        -Práctica la forma correcta del alfabeto.
-        -Otros ejercicios.`,
+    text: `Realizar dictado con el material facilitado, Escribe tu nombre 10 veces, Práctica la forma correcta del alfabeto, Otros ejercicios.`,
     sessions: 2,
     week: 1,
     month: 1,
@@ -60,11 +53,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 6,
     range: 1,
-    text: `
-        -Realizar dictado con el material facilitado.
-        -Escribe tu nombre 10 veces.
-        -Práctica la forma correcta del alfabeto.
-        -Otros ejercicios.`,
+    text: `Realizar dictado con el material facilitado, Escribe tu nombre 10 veces, Práctica la forma correcta del alfabeto, Otros ejercicios.`,
     sessions: 10,
     week: 1,
     month: 1,
@@ -73,11 +62,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 7,
     range: 2,
-    text: `
-        -Realizar dictado con el material facilitado.
-        -Escribe tu nombre 10 veces.
-        -Práctica la forma correcta del alfabeto.
-        -Otros ejercicios.`,
+    text: `Realizar dictado con el material facilitado, Escribe tu nombre 10 veces, Práctica la forma correcta del alfabeto, Otros ejercicios.`,
     sessions: 20,
     week: 1,
     month: 2,
@@ -86,11 +71,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 8,
     range: 3,
-    text: `
-        -Realizar dictado con el material facilitado.
-        -Escribe tu nombre 10 veces.
-        -Práctica la forma correcta del alfabeto.
-        -Otros ejercicios.`,
+    text: `Realizar dictado con el material facilitado, Escribe tu nombre 10 veces, Práctica la forma correcta del alfabeto, Otros ejercicios.`,
     sessions: 30,
     week: 1,
     month: 3,
@@ -100,9 +81,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 9,
     range: 0,
-    text: `
-    -Realiza la escritura de los números.
-    - Realiza los ejercicios propuestos en el sistema.
+    text: `Realiza la escritura de los números, Realiza los ejercicios propuestos en el sistema.
 `,
     sessions: 1,
     week: 1,
@@ -112,9 +91,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 10,
     range: 1,
-    text: `
-    -Realiza la escritura de los números.
-    - Realiza los ejercicios propuestos en el sistema.
+    text: `Realiza la escritura de los números, Realiza los ejercicios propuestos en el sistema.
 `,
     sessions: 10,
     week: 1,
@@ -124,9 +101,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 11,
     range: 2,
-    text: `
-    -Realiza la escritura de los números.
-    - Realiza los ejercicios propuestos en el sistema.
+    text: `Realiza la escritura de los números, Realiza los ejercicios propuestos en el sistema.
 `,
     sessions: 20,
     week: 1,
@@ -136,9 +111,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 12,
     range: 3,
-    text: `
-    -Realiza la escritura de los números.
-    - Realiza los ejercicios propuestos en el sistema.
+    text: `Realiza la escritura de los números, Realiza los ejercicios propuestos en el sistema.
 `,
     sessions: 30,
     week: 1,
@@ -149,7 +122,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 13,
     range: 0,
-    text: `-Práctica lectura a través de las cartillas y libros.`,
+    text: `Práctica lectura a través de las cartillas y libros.`,
     sessions: 0,
     week: 0,
     month: 0,
@@ -158,7 +131,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 14,
     range: 1,
-    text: `-Práctica lectura a través de las cartillas y libros.`,
+    text: `Práctica lectura a través de las cartillas y libros.`,
     sessions: 10,
     week: 1,
     month: 1,
@@ -167,7 +140,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 15,
     range: 2,
-    text: `-Práctica lectura a través de las cartillas y libros.`,
+    text: `Práctica lectura a través de las cartillas y libros.`,
     sessions: 20,
     week: 1,
     month: 2,
@@ -176,7 +149,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 16,
     range: 3,
-    text: `-Práctica lectura a través de las cartillas y libros.`,
+    text: `Práctica lectura a través de las cartillas y libros.`,
     sessions: 30,
     week: 2,
     month: 3,
@@ -186,7 +159,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 17,
     range: 0,
-    text: `-Práctica en los cuadernillos de motricidad y trazos.`,
+    text: `Práctica en los cuadernillos de motricidad y trazos.`,
     sessions: 0,
     week: 0,
     month: 0,
@@ -195,7 +168,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 18,
     range: 1,
-    text: `-Práctica en los cuadernillos de motricidad y trazos.`,
+    text: `Práctica en los cuadernillos de motricidad y trazos.`,
     sessions: 10,
     week: 1,
     month: 1,
@@ -204,7 +177,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 19,
     range: 2,
-    text: `-Práctica en los cuadernillos de motricidad y trazos.`,
+    text: `Práctica en los cuadernillos de motricidad y trazos.`,
     sessions: 20,
     week: 1,
     month: 2,
@@ -213,7 +186,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 20,
     range: 3,
-    text: `-Práctica en los cuadernillos de motricidad y trazos.`,
+    text: `Práctica en los cuadernillos de motricidad y trazos.`,
     sessions: 30,
     week: 1,
     month: 3,
@@ -223,7 +196,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 21,
     range: 0,
-    text: `-Práctica a través de los cuadernillos de Razonamiento Verbal.`,
+    text: `Práctica a través de los cuadernillos de Razonamiento Verbal.`,
     sessions: 0,
     week: 0,
     month: 0,
@@ -232,7 +205,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 22,
     range: 1,
-    text: `-Práctica a través de los cuadernillos de Razonamiento Verbal.`,
+    text: `Práctica a través de los cuadernillos de Razonamiento Verbal.`,
     sessions: 10,
     week: 1,
     month: 1,
@@ -241,7 +214,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 23,
     range: 2,
-    text: `-Práctica a través de los cuadernillos de Razonamiento Verbal.`,
+    text: `Práctica a través de los cuadernillos de Razonamiento Verbal.`,
     sessions: 20,
     week: 1,
     month: 2,
@@ -250,7 +223,7 @@ export const TREATMENT_DATA: Treatment[] = [
   {
     id: 24,
     range: 3,
-    text: `-Práctica a través de los cuadernillos de Razonamiento Verbal.`,
+    text: `Práctica a través de los cuadernillos de Razonamiento Verbal.`,
     sessions: 30,
     week: 1,
     month: 3,
