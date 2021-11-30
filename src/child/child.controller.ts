@@ -6,39 +6,16 @@ import {AuthGuard} from '@nestjs/passport';
 import {TutorService} from '../tutor/tutor.service';
 import {UsersService} from '../users/users.service';
 import {ProfessionalService} from '../professional/professional.service';
+import {QuestionTestService} from '../question-test/question-test.service';
 
 @Controller('child')
 export class ChildController implements Crud {
 
-  ranges = [
-      {
-        min: 0,
-        max: 0.69,
-        title: 'Sin Riesgo',
-        children: [],
-      },
-      {
-        min: 0.70,
-        max: 1.19,
-        title: 'Riesgo Leve',
-        children: [],
-      },
-      {
-        min: 1.20,
-        max: 1.70,
-        title: 'Moderado',
-        children: [],
-      },
-      {
-        min: 1.71,
-        max: 3,
-        title: 'Risgo Alto',
-        children: [],
-      },
-    ];
+
 
   constructor(private readonly childService: ChildService,
               private userService: UsersService,
+              private testService: QuestionTestService,
               private professionalService: ProfessionalService,
               private readonly tutorService: TutorService) {
   }
@@ -143,16 +120,49 @@ export class ChildController implements Crud {
   @UseGuards(AuthGuard('jwt'))
   @Get('classification/children')
   async childOfClassification() {
-    const a = [];
-    a.push({
+    const a = {
       title: 'Sin diagnóstico',
-      children: (await this.childService.notTest()).filter(r => r.tests.length === 0),
-    });
-    for (const range of this.ranges) {
-      const r = range;
-      r.children = await this.childService.inRange(range.min, range.max);
-      a.push(r);
+      children: [],
+    };
+    const re = [
+      {
+        min: 0,
+        max: 0.69,
+        title: 'Sin Riesgo',
+        children: [],
+      },
+      {
+        min: 0.70,
+        max: 1.19,
+        title: 'Riesgo Leve',
+        children: [],
+      },
+      {
+        min: 1.20,
+        max: 1.70,
+        title: 'Moderado',
+        children: [],
+      },
+      {
+        min: 1.71,
+        max: 3,
+        title: 'Risgo Alto',
+        children: [],
+      },
+    ];
+
+    const children = await this.childService.all();
+
+    for (const child of children) {
+      const test = await this.testService.testChild(child.id);
+      if (test.length > 0) {
+        const testResult = test[0];
+        const range = re.find(r => r.min <= testResult.totalValue && r.max >= testResult.totalValue);
+        range.children.push(child);
+      } else {
+        a.children.push(child);
+      }
     }
-    return a;
+    return [a].concat(re);
   }
 }

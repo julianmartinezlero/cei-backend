@@ -86,6 +86,7 @@ export class ChildService implements Crud {
         .where('professional.deleteAt IS NULL')
         .andWhere('test.totalValue >= :m')
         .andWhere('test.totalValue <= :n')
+        .orderBy('test.createdAt', 'DESC')
         .setParameters({m: min, n: max});
     // .getMany();
     return query.getMany();
