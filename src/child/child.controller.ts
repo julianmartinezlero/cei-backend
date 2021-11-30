@@ -11,8 +11,6 @@ import {QuestionTestService} from '../question-test/question-test.service';
 @Controller('child')
 export class ChildController implements Crud {
 
-
-
   constructor(private readonly childService: ChildService,
               private userService: UsersService,
               private testService: QuestionTestService,
