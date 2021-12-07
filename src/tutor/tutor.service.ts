@@ -15,7 +15,7 @@ export class TutorService implements Crud {
     return this.tutorRepository.createQueryBuilder('tutor')
       .leftJoinAndSelect('tutor.children', 'children')
       .where('tutor.position IS NULL')
-      // .andWhere('')
+      .orderBy('tutor.name,tutor.lastName', 'ASC')
       .getMany();
   }
 

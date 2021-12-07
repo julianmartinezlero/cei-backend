@@ -21,12 +21,7 @@ export class ChildController implements Crud {
   @UseGuards(AuthGuard('jwt'))
   @Get()
   all(@Param() params): Promise<any> {
-    return this.childService.all(
-        // {
-      // page: params.page ? params.page : 1,
-      // limit: params.limit ? params.limit : 20,
-    // }
-    );
+    return this.childService.all();
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -162,5 +157,11 @@ export class ChildController implements Crud {
       }
     }
     return [a].concat(re);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('testSummary/children')
+  testSummary() {
+    return this.childService.childTestSummary();
   }
 }

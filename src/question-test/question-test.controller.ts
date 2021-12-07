@@ -79,6 +79,12 @@ export class QuestionTestController {
   }
 
   @UseGuards(AuthGuard('jwt'))
+  @Get(':id/allResolved')
+  allResolved(@Param() params) {
+    return this.testService.allSolvedResult(params.id);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(FilesInterceptor('files'))
   @Post('update/solved')
   async updateQuestions(@Param() params, @Body() body, @UploadedFiles() files: Array<undefined|Express.Multer.File>) {

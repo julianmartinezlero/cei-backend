@@ -1,14 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { Crud } from '../interfaces/crud';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Child } from '../entity/child.entity';
-import {
-  paginate,
-  Pagination,
-  IPaginationOptions,
-} from 'nestjs-typeorm-paginate';
-import {queue} from 'rxjs/internal/scheduler/queue';
+import {Injectable} from '@nestjs/common';
+import {Crud} from '../interfaces/crud';
+import {InjectRepository} from '@nestjs/typeorm';
+import {Repository} from 'typeorm';
+import {Child} from '../entity/child.entity';
+import {IPaginationOptions} from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class ChildService implements Crud {
@@ -22,7 +17,8 @@ export class ChildService implements Crud {
     // return await this.tutorRepository.createQueryBuilder().getMany();
     const query = this.childRepository.createQueryBuilder('child')
       .leftJoinAndSelect('child.professional', 'professional')
-      .where('professional.deleteAt IS NULL');
+      .where('professional.deleteAt IS NULL')
+      .orderBy('child.name, child.lastName', 'ASC');
       // .getMany();
     return query.getMany();
     // return paginate<Child>(query, options);
@@ -54,6 +50,7 @@ export class ChildService implements Crud {
     return await this.childRepository.createQueryBuilder('child')
       .leftJoinAndSelect('child.tests', 'tests')
       .where('child.professional.id = :idT', { idT: idTutor })
+      .orderBy('child.name, child.lastName', 'ASC')
       .getMany();
   }
 
@@ -97,6 +94,14 @@ export class ChildService implements Crud {
     return this.childRepository.createQueryBuilder('child')
         .leftJoinAndSelect('child.professional', 'professional')
         .leftJoinAndSelect('child.tests', 'tests')
+        .getMany();
+  }
+
+  async childTestSummary() {
+    return this.childRepository.createQueryBuilder('child')
+        .leftJoinAndSelect('child.tests', 'tests')
+        .leftJoinAndSelect('tests', 'tests')
+        .orderBy('child.name,child.lastName,tests.createdAt', 'ASC')
         .getMany();
   }
 }

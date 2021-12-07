@@ -101,4 +101,13 @@ export class QuestionTestService implements Crud {
         .where('test.id = :id', {id})
         .getMany();
   }
+
+  allSolvedResult(childId) {
+    return this.testRepository.createQueryBuilder('test')
+        .leftJoinAndSelect('test.testResults', 'testResults')
+        .leftJoinAndSelect('testResults.question', 'question')
+        .leftJoinAndSelect('testResults.questionOption', 'questionOption')
+        .where('test.child.id = :id', {id: childId})
+        .getMany();
+  }
 }
