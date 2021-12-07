@@ -114,7 +114,7 @@ export class ChildController implements Crud {
   @Get('classification/children')
   async childOfClassification() {
     const a = {
-      title: 'Sin diagnóstico',
+      title: 'Sin Diagnóstico',
       children: [],
     };
     const re = [
@@ -133,13 +133,13 @@ export class ChildController implements Crud {
       {
         min: 1.20,
         max: 1.70,
-        title: 'Moderado',
+        title: 'Riesgo Moderado',
         children: [],
       },
       {
         min: 1.71,
         max: 3,
-        title: 'Risgo Alto',
+        title: 'Riesgo Alto',
         children: [],
       },
     ];
