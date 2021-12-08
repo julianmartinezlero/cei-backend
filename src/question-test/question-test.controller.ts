@@ -5,7 +5,7 @@ import {
   Get,
   HttpException,
   Param,
-  Post,
+  Post, Put,
   Req,
   Request,
   Res,
@@ -199,12 +199,17 @@ export class QuestionTestController {
       };
     } catch (e) {
       // tslint:disable-next-line:no-console
-      console.log(e);
       await query.rollbackTransaction();
       throw new HttpException('Error', 406);
     } finally {
       await query.release();
     }
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Put  ('solved/update/:id')
+  async solvedUpdate(@Param() param, @Body() body) {
+    return this.questionTestSolved.update(param.id, {resourceUrl: body.resourceUrl});
   }
 
   @UseGuards(AuthGuard('jwt'))

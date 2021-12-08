@@ -17,13 +17,16 @@ export class QuestionTestSolvedService implements Crud {
     return await this.testQuestionOption.insert(value);
   }
 
+  // tslint:disable-next-line:no-empty
   delete(id: any) {
   }
 
+  // tslint:disable-next-line:no-empty
   show(id: any) {
   }
 
   update(id: any, value: any) {
+    return this.testQuestionOption.update(id, value);
   }
 
 }
