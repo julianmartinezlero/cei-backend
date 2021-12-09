@@ -92,7 +92,7 @@ export class QuestionTestController {
     await query.startTransaction();
     try {
       for (const question of body) {
-        await this.testService.updateQuestion(question.questionId, question.questionId.questionOptions, query);
+        await this.testService.updateQuestion(question, question.questionOptions, query);
       }
       await query.commitTransaction();
       return {
